@@ -45,5 +45,7 @@
 			</c:choose>
 		</tbody>
 	</table>
+	<input type="button" id="btn" value="작성">
+
 </body>
 </html>
