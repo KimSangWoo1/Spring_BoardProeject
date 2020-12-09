@@ -5,8 +5,10 @@
  
 <configuration>  
       <typeAliases>
-            <typeAlias alias="TestVO" type="com.test.Spring.TestVO"></typeAlias>
+            <typeAlias alias="TestVO" type="com.test.myapp.TestVO"></typeAlias>
+		<!-- <typeAlias 여기서 계속 추가 가능</typeAlias> -->
       </typeAliases>
  
 </configuration>
 
+<!-- https://wondongho.tistory.com/72 -->
