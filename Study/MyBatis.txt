@@ -1,5 +1,0 @@
-Mybatis 장점 요약
-1. 간결한 코드 처리 : JDBC작업을 위한 반복적인 코드 (try~catch~finally, PreparedStatement, ResultSet)를 직접 작성하지 않아도 된다.
-2. SQL문 분리 운영 : XML 또는 어노테이션 방식으로 SQL문을 별도로 처리하는 작업이 가능하다.
-3. Spring과 연동으로 자동화된 처리 : Mybatis-Spring 라이브러리를 이용하여 직접 SQL문 호출없이도 원하는 결과를 얻을 수 있다.
-4. 동적 SQL을 이용한 제어기능 : 제어문이나 반복문 등의 처리 기능을 통해 SQL과 관련된 처리를 Java코드에서 분리할 수 있다.
