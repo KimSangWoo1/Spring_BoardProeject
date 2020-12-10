@@ -1,5 +1,11 @@
 package com.test.myapp;
 
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import javax.inject.Inject;
 
 import org.junit.Before;
@@ -7,12 +13,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-//@WebAppConfiguration  스프링 4.3.8 버전으로 변경해야함  Junit은 4.11 이상 버전으로 
+@WebAppConfiguration 
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
 public class ControllerTest {
 
@@ -20,7 +31,7 @@ public class ControllerTest {
 	
 	@Inject
 	private WebApplicationContext webApplicationContext;
-	/*  버전 업해야 되는듯
+
 	private MockMvc mocMvc;
 	
 	@Before
@@ -31,50 +42,52 @@ public class ControllerTest {
 	
 	@Test
 	public void testDoA() throws Exception{
-		mocMvc.perform(MockMvcequestBuilders.get("/doA"))
-			  .andDO(print())
-			  .andExpect(status().isOK());
+		mocMvc.perform(MockMvcRequestBuilders.get("/doA"))
+		  .andDo(print())
+		  .andExpect(status().isOk());
 	}
 	
 	
 	@Test
 	public void testDoB() throws Exception{
-		mocMvc.perform(MockMvcequestBuilders.get("/doB"))
-			  .andDO(print())
-			  .andExpect(status().isOK());
+		mocMvc.perform(MockMvcRequestBuilders.get("/doB"))
+			  .andDo(print())
+			  .andExpect(status().isOk());
 	}
 	
 	
 	@Test
 	public void testDoC() throws Exception{
-		mocMvc.perform(MockMvcequestBuilders.get("/doC?msg=world"))
-			  .andDO(print())
-			  .andExpect(status().isOK());
+		mocMvc.perform(MockMvcRequestBuilders.get("/doC?msg=world"))
+			  .andDo(print())	
+			  .andExpect(status().isOk());
 	}
 	
 	
 	@Test
 	public void testDoD() throws Exception{
-		mocMvc.perform(MockMvcequestBuilders.get("/doD"))
-			  .andDO(print())
-			  .andExpect(status().isOK())
+		mocMvc.perform(MockMvcRequestBuilders.get("/doD"))
+		 .andDo(print())
+		  .andExpect(status().isOk())
 			  .andExpect(model().attributeExists("productVO"));
 	}
 	
 	@Test
 	public void testDoE() throws Exception{
-		mocMvc.perform(MockMvcequestBuilders.get("/doE"))
-			  .andDO(print())
-			  .andExpect(status().isOK())
-			  .andExpect(rediectedUrl("/doF?msg=this+is+the+message+with+redirected"));
+		mocMvc.perform(MockMvcRequestBuilders.get("/doE"))
+		 .andDo(print())
+		  .andExpect(status().isOk())
+		.andExpect(redirectedUrl("/doF?msg=this+is+the+message+with+redirected"));
 	}
 	
 	@Test
 	public void testDoJson() throws Exception{
-		mocMvc.perform(MockMvcequestBuilders.get("/doJson"))
-			  .andDO(print())
-			  .andExpect(status().isOK())
-			  .andExpect(content().contentType("application/json;charset=utf-8");
+		mocMvc.perform(MockMvcRequestBuilders.get("/doJson"))
+		 
+			.andDo(print())
+		  .andExpect(status().isOk());
+		// 방법 도저히 모르겠음
+		//.andExpect(content().contentType("application/json;charset=utf-8"));
 	}
-	*/
+	
 }
