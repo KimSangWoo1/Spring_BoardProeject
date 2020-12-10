@@ -1,0 +1,7 @@
+MySql 구조: https://hue9010.github.io/db/mysql_schema/
+
+Mysql에서는 DATABASE = SCHEMA
+	 데이터베이스 = 스키마 로  동의어로 취급한다
+따라서 sql 쿼리 작성시 혼동할 필요 없이 둘이 같다고 취급하면 됨
+
+*Oracle은 다름
