@@ -29,7 +29,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<String, Object> boardUpdate(Map<String, Object> map) {
+	public List<Map<String, Object>> boardUpdate(Map<String, Object> map) {
 		return boardDAO.boardUpdate(map);
 	}
 	

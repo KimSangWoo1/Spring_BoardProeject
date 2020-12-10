@@ -25,7 +25,7 @@ public class BoardDAO {
 		sqlSession.insert("board.boardInsert",map);
 	}
 
-	public List<String, Object> boardUpdate(Map<String, Object> map) {
+	public List<Map<String, Object>> boardUpdate(Map<String, Object> map) {
 
 		return sqlSession.selectList("board.boardUpdate",map);
 			

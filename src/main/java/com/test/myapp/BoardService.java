@@ -10,5 +10,5 @@ public interface BoardService {
 
 	Map<String, Object> boardUpateView(Map<String, Object> map);
 
-	List<String, Object> boardUpdate(Map<String, Object> map);
+	List<Map<String, Object>> boardUpdate(Map<String, Object> map);
 }
