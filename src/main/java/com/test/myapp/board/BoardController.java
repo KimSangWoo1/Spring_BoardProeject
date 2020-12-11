@@ -1,4 +1,4 @@
-package com.test.myapp;
+package com.test.myapp.board;
 
 import java.util.HashMap;
 import java.util.List;

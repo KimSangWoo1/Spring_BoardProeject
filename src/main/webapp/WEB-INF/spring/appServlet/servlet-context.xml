@@ -3,7 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -37,4 +39,15 @@
 	<!--3. ??? 
 		<mvc:annotation-driven/> -->
 	
+	<!-- 인터셉터 설정 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/interceptor/doA"/>
+			<mapping path="/interceptor/doB"/>
+			<beans:bean id="sampleInterceptor" class="com.test.myapp.tutorial.interceptor.SampleInterceptor"/>
+		</interceptor>
+		<!-- 다른 인터셉터 추가시 -->
+		<!--  여기다가 <interceptor> 태그 추가해서 넣으면 됨 -->
+	</interceptors>
 </beans:beans>
+

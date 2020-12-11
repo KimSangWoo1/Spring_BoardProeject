@@ -1,4 +1,4 @@
-package com.test.myapp;
+package com.test.myapp.tutorial.vo;
 
 public class ProductVO {
 	

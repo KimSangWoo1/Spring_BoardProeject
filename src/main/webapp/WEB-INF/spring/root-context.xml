@@ -12,7 +12,8 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 		<!-- <property name="url" value="jdbc:mariadb://121.169.194.198:3306/hairmanager"> </property> -->	
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="org.mariadb.jdbc.Driver"></property>
+	   <!-- org.mariadb.jdbc.Driver -->
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
 		<property name="url" value="jdbc:mariadb://localhost:3306/spring"></property>
 		<property name="username" value="ksw"></property>
 		<property name="password" value="1234"></property>
@@ -21,13 +22,15 @@
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"></property>
-        <!-- Mybatis의 config파이의 위치를 지정해주기 -->
-      <!--    <property name="configLocation" value="classpath:/mybatis/mybatis-config.xml"></property> -->
+        <!-- Mybatis의 config파일의 위치를 지정해주기 -->
+        <property name="configLocation" value="classpath:/mybatis/mybatis-config.xml"></property>
         <!-- 쿼리가 작성될 파일드 위치 설정 (sql폴더 하위 xml파일 모두 매핑하게 됨 -->
         <property name="mapperLocations" value="classpath*:/mybatis/sql/*.xml"></property>
     </bean>
- 
+ 	<!--  DB Open Close 해주는 Mybatis-spring 라이브러리에 SqlSessionTemplate 클래스 -->
+ 	<!--  추가적으로 SqlSessionTemplate는 SqlSession인터페이스를 구현한 클래스로 기본적인 트랜잭션의 관리, 쓰레드처리의 안정성을 보장해줌, DB연결과 종료도 책임짐 -->
     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg  index="0" name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
+    	
 </beans>
