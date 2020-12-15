@@ -67,7 +67,7 @@
 				success : function(data) {
 					alert(data.Msg);
 					if(data.Code==0){
-						window.location.href = "/myapp/index/";
+						window.location.href = "/myapp/boardList";
 					}else{
 						//location.reload();
 					}

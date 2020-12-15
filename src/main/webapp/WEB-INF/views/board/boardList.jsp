@@ -7,8 +7,34 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 </head>
 <body>
-<h2>게시판 목록</h2>
-<table style="border:1px solid #ccc">
+<h2 align="center">게시판 목록</h2>
+<style>
+    table, th, td {
+        border: 1px solid #bcbcbc;
+      }
+	td {
+        text-align: center;
+      }
+
+</style>
+<table align="left">
+	<colgroup>
+	<col width="100%" height="100%"/>
+	</colgroup>
+	<thead>
+		<tr>
+			<th scope="col"> 기능 </th>
+		</tr>
+		<tbody>
+			<tr>
+				<td>게시글 작성</td>
+			</tr>
+			<tr>
+				<td>게시글 수정</td>
+			</tr>
+		</tbody>
+</table>
+<table align="center" >
     <colgroup>
         <col width="10%"/>
         <col width="*"/>
@@ -28,10 +54,10 @@
             <c:when test="${fn:length(list) > 0}">
                 <c:forEach items="${list }" var="row">
                     <tr>
-                        <td>${row.IDX }</td>
-                        <td>${row.TITLE }</td>
-                        <td>${row.HIT_CNT }</td>
-                        <td>${row.CREA_DTM }</td>
+                        <td>${row.idx }</td>
+                        <td>${row.title }</td>
+                        <td>${row.hit_count }</td>
+                        <td>${row.create_time }</td>
                     </tr>
                 </c:forEach>
             </c:when>

@@ -23,6 +23,21 @@ public class BoardController {
 	//DB Servcie
 	@Resource(name="boardService")
 	private BoardService boardService;
+	
+	@RequestMapping("/boardList")
+	   public ModelAndView openBoardList(Map<String, Object>map)throws Exception{
+	      ModelAndView mv = new ModelAndView("/board/boardList");
+	      
+	      List<Map<String, Object>> list = boardService.selectBoardList(map);
+	      mv.addObject("list",list);
+	      return mv;
+	   }
+	
+	
+	
+	
+	/*
+	
 	//게시판 리스트
 	@RequestMapping("/boardList")
 	public ModelAndView boardList(Map<String,Object>map) throws Exception {
@@ -32,6 +47,7 @@ public class BoardController {
 		mv.addObject("list",list);
 		return mv;
 	}
+	*/
 	//게시판 jsp에 작성
 	@RequestMapping("/boardWrite")
 	public ModelAndView boardWrite(Map<String,Object> map) throws Exception{
