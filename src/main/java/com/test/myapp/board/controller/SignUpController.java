@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,45 +24,9 @@ Logger log = Logger.getLogger(this.getClass().toGenericString());
 	@Resource(name="userService")
 	private UserService userService;
 	//1. 회원가입 진행
-	@RequestMapping(value="/signup_click", method = RequestMethod.POST)
-	public HashMap <String, String> Login(HttpServletRequest httpServletRequest, Model model) {
-		Map<String, Object> map = new HashMap<String,Object>();
-		HashMap<String, String> result = new HashMap <String,String>();
-		
-		String id = httpServletRequest.getParameter("id");
-		String pw = httpServletRequest.getParameter("pw");
-		map.put("id", id);
-		map.put("pw", pw);
-		
-		log.info("id : "+id);
-		log.info("pw : "+pw);
-		//1. 중복 확인	
-				
-		//2. 회원가입 처리 진행
-		boolean check = userService.InsertUserService(map);
-		
-		if(check) {
-			log.info("회원 가입 성공");
-			String Msg = "회원가입 성공";
-			String Code = "0";
-			
-			result.put("Msg", Msg);
-			result.put("Code", Code);
-		}
-		else {
-			log.info("회원가입 실패 ");
-			String Msg = "실패";
-			String Code = "1";
-			
-			result.put("Msg", Msg);
-			result.put("Code", Code);
-		}
-		return result;
-	}
-	//2. ajax 회원가입
 	@RequestMapping(value="/signUpChk", method = RequestMethod.POST)
 	@ResponseBody
-	public HashMap <String, String> SignUpChk(HttpServletRequest httpServletRequest, Model model) {
+	public HashMap <String, String> SignUpChk(HttpServletRequest httpServletRequest, HttpSession session) {
 		Map<String, Object> map = new HashMap<String,Object>();
 		HashMap<String, String> result = new HashMap <String,String>();
 		

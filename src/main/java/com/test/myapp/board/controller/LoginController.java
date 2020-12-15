@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,30 +27,10 @@ public class LoginController {
 	@Resource(name="userService")
 	private UserService userService;
 	
-	//1.로그인 파라메터 가져오기
-	@RequestMapping(value="/login_click", method = RequestMethod.GET)
-	public ModelAndView Login(@RequestParam("id") String id,
-							@RequestParam("pw") String pw) throws Exception {
-		Map<String, Object> map = new HashMap<String,Object>();
-
-		map.put("id", id);
-		map.put("pw", pw);
-
-		//로그인 결과 처리
-		boolean result = userService.CheckUserService(map);
-		ModelAndView mv= new ModelAndView("redirect:/index/");
-		if(result) {
-			log.info("로그인 성공  ");
-		}else {
-			log.info("로그인 실패  ");
-		}
-		return mv;
-	}
-	
 	//1.로그인 ajax
 		@RequestMapping(value="/loginChk", method = RequestMethod.POST)
 		@ResponseBody
-		public  HashMap <String, String>  loginChk(Locale locale, Model model, HttpServletRequest request) {
+		public  HashMap <String, String>  loginChk(HttpServletRequest request, HttpSession session) {
 			HashMap<String, String> result = new HashMap <String,String>();
 			Map<String, Object> map = new HashMap<String,Object>();
 			
@@ -58,7 +39,9 @@ public class LoginController {
 			
 			map.put("id", id);
 			map.put("pw", pw);
-			boolean check = userService.CheckUserService(map);
+			//getSession 세션생성 하는데 만약 기존에 생성된 세션이 있다면 기존 Session을 반환
+		    session = request.getSession();
+			boolean check = userService.LoginUserService(map, session);
 				
 			if (check) {
 				String Msg = "로그인 성공";
@@ -85,10 +68,12 @@ public class LoginController {
 			return mv;
 		}
 		
+		/*
 	//3.메인 페이지
 		@RequestMapping("/index")
 		public ModelAndView GoMain() throws Exception {
 			ModelAndView mv = new ModelAndView("/index");
 			return mv;
 		}
+		*/
 }

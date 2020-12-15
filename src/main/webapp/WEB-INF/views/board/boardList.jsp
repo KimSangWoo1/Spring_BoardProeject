@@ -1,47 +1,48 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<title>게시글 작성</title>
+<title>first</title>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 </head>
 <body>
-   <form id="form" action="${pageContext.request.contextPath}/boardInsert/" method="get" id="form1">
-      <table>
-         <colgroup>
-            <col width="100px"/>
-            <col width="200px"/>
-         </colgroup>
-         <caption>게시글 작성</caption>
-         <tbody>
-            <tr>
-               <th scope="row">제목</th>
-               <td><input type="text" id="title" name="title"></input></td>
-            </tr>
-            <tr>
-               <td colspan="2"><textarea rows="10" cols="50" title="내용" id="contents" name="contents"></textarea>
-            </tr>
-         </tbody>
-      </table>
-   </form>
-   
-      <input type="button" id="board_write" onclick="boardInsert();" value="작성하기" form="form1">
-      <input type="submit" id="board_list" onclick="boardList();"  value="목록으로" form="form1">
-   <script type="text/javascript">
-	   $(document).ready(function(){
-
-	   });
-	     function boardInsert(){
-           $("#form").submit();
-         }
-         function boardList(){
-          	location.href ="${pageContext.request.contextPath}/boardList/";
-         }
-   </script>
+<h2>게시판 목록</h2>
+<table style="border:1px solid #ccc">
+    <colgroup>
+        <col width="10%"/>
+        <col width="*"/>
+        <col width="15%"/>
+        <col width="20%"/>
+    </colgroup>
+    <thead>
+        <tr>
+            <th scope="col">글번호</th>
+            <th scope="col">제목</th>
+            <th scope="col">조회수</th>
+            <th scope="col">작성일</th>
+        </tr>
+    </thead>
+    <tbody>
+        <c:choose>
+            <c:when test="${fn:length(list) > 0}">
+                <c:forEach items="${list }" var="row">
+                    <tr>
+                        <td>${row.IDX }</td>
+                        <td>${row.TITLE }</td>
+                        <td>${row.HIT_CNT }</td>
+                        <td>${row.CREA_DTM }</td>
+                    </tr>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                <tr>
+                    <td colspan="4">조회된 결과가 없습니다.</td>
+                </tr>
+            </c:otherwise>
+        </c:choose>
+          
+    </tbody>
+</table>
 </body>
 </html>

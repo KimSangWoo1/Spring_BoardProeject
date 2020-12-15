@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.test.myapp.board.dao.BoardDAO;
 
+
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
 
@@ -32,7 +33,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<Map<String, Object>> boardUpdate(Map<String, Object> map) {
-		return boardDAO.boardUpdate(map);
+		return (List<Map<String, Object>>) boardDAO.boardUpdateView(map);
 	}
 	
 }

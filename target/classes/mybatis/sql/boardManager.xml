@@ -5,15 +5,14 @@
 	<select id="selectBoardList" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
             SELECT
-                IDX,
-                TITLE,
-                CLICK_CNT,
-                CREATE_DATE
+                idx,
+                title,
+                hit_count,
+                create_time,
+                create_id
             FROM
-                board_table
-            where 
-            	DELYN='N' 
-            ORDER BY IDX DESC
+                tbl_board 
+            ORDER BY idx DESC
         ]]>
 	</select>
 	<!-- useGeneratedKeys="true" keyProperty="IDX" AutoInCrement 사용했기에 적어줘야 함 -->
