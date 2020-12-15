@@ -25,7 +25,7 @@
             </tr>
              <tr>
                <th scope="row">비밀번호</th>
-               <td><input type="text" id="pw" name="pw"></input></td>
+               <td><input type="password" id="pw" name="pw"></input></td>
             </tr>
          </tbody>
       </table>
@@ -67,8 +67,11 @@
           		},
           		success: function(data){
           			alert(data.Msg);
-          			goLogin();
-          			//location.reload();
+          			if(data.Code==0){
+          				goLogin();	
+          			}else{
+          				//location.reload();
+          			}       			
           		},
           		error: function(request,status,error){
           		    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);

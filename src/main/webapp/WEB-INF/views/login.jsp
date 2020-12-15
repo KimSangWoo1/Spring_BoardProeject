@@ -30,51 +30,56 @@
 		</table>
 	</form>
 
-	<input type="button" id="login_submit"  value="로그인" form="form">
-	<input type="button" id="go_signup"  value="회원가입">
+	<input type="button" id="login_submit" value="로그인" form="form">
+	<input type="button" id="go_signup" value="회원가입">
 	<script type="text/javascript">
-	   $(document).ready(function(){
-		   $("#login_submit").on('click', function() {
-				loginChk();
+		$(document).ready(function() {
+			$("#login_submit").on('click', function() {
+				login_Click();
 			})
-			   $("#go_signup").on('click', function() {
-				   goSignUp();
+			$("#go_signup").on('click', function() {
+				goSignUp();
 			})
-	   });
-	   
-	   function login_Click(){
-	    	 var loginForm = document.loginForm;
-	    	 var userid = loginForm.id.value;
-	    	 var userpw = loginForm.pw.value;
-	    	 if(!userid || !userpw){
-	    		 alert("아이디와 비밀번호를 입력하세요");
-	    	 }else{
-	    		 //loginForm.submit();
-	    		 loginCheck();
-	    	 }        
-       }
-       function goSignUp(){
-        	location.href ="${pageContext.request.contextPath}/signup/";
-       }
-       
-       function loginCheck(){
-      	 $.ajax({
-      		 url:"/myapp/loginChk",
-      		 type:"POST",
-      		 data:{
-      			 id:$("#id").val(),
-      			 pw:$("#pw").val()       			 
-      		},
-      		success: function(data){
-      			alert(data.Msg);
-      			//location.reload();
-      		},
-      		error: function(request,status,error){
-      		    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-      		}        		 
-      	 });
-       } 
-   </script>
+		});
+
+		function login_Click() {
+			var loginForm = document.loginForm;
+			var userid = loginForm.id.value;
+			var userpw = loginForm.pw.value;
+			if (!userid || !userpw) {
+				alert("아이디와 비밀번호를 입력하세요");
+			} else {
+				loginCheck();
+			}
+		}
+		function goSignUp() {
+			location.href = "${pageContext.request.contextPath}/signup/";
+		}
+
+		function loginCheck() {
+			$.ajax({
+				url : "/myapp/loginChk",
+				type : "POST",
+				data : {
+					id : $("#id").val(),
+					pw : $("#pw").val()
+				},
+				success : function(data) {
+					alert(data.Msg);
+					if(data.Code==0){
+						window.location.href = "/myapp/index/";
+					}else{
+						//location.reload();
+					}
+				
+				},
+				error : function(request, status, error) {
+					alert("code:" + request.status + "\n" + "message:"
+							+ request.responseText + "\n" + "error:" + error);
+				}
+			});
+		}
+	</script>
 </body>
 
 </html>

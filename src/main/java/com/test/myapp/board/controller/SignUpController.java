@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.test.myapp.board.service.UserService;
@@ -59,6 +60,7 @@ Logger log = Logger.getLogger(this.getClass().toGenericString());
 	}
 	//2. ajax 회원가입
 	@RequestMapping(value="/signUpChk", method = RequestMethod.POST)
+	@ResponseBody
 	public HashMap <String, String> SignUpChk(HttpServletRequest httpServletRequest, Model model) {
 		Map<String, Object> map = new HashMap<String,Object>();
 		HashMap<String, String> result = new HashMap <String,String>();
@@ -68,27 +70,32 @@ Logger log = Logger.getLogger(this.getClass().toGenericString());
 		map.put("id", id);
 		map.put("pw", pw);
 
+		String Msg ;
+		String Code ;
 		//1. 중복 확인	
-		
-		//2. 회원가입 처리 진행
-		boolean check = userService.InsertUserService(map);
-		
+		boolean check = userService.CheckUserService(map);
 		if(check) {
-			log.info("회원 가입 성공");
-			String Msg = "회원가입 성공";
-			String Code = "0";
+			log.info("회원 중복");
+			Msg = "회원중복";
+			Code = "1";
+		}else {
+			//2. 회원가입 처리 진행
+			check = userService.InsertUserService(map);
 			
-			result.put("Msg", Msg);
-			result.put("Code", Code);
+			if(check) {
+				log.info("회원 가입 성공");
+				Msg = "회원가입 성공";
+				Code = "0";
+			}
+			else {
+				log.info("회원가입 실패 ");
+				Msg = "실패";
+				Code = "1";
+			}	
 		}
-		else {
-			log.info("회원가입 실패 ");
-			String Msg = "실패";
-			String Code = "1";
-			
-			result.put("Msg", Msg);
-			result.put("Code", Code);
-		}
+		result.put("Msg", Msg);
+		result.put("Code", Code);
+		
 		return result;
 	}
 	

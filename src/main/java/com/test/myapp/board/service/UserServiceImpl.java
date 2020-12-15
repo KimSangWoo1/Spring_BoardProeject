@@ -30,7 +30,6 @@ public class UserServiceImpl implements UserService {
 		userVO = userDAO.CheckUser(userVO);
 		if(userVO!=null) {
 			int no = userVO.getUserno();
-			System.out.println("°á°ú : " + no);
 			if (no != 0) {
 				result = true;
 			}	

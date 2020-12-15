@@ -10,7 +10,7 @@
 		userid = #{userid} AND userpw =#{userpw}
 	</select>
 
-	<insert id="inserUser" parameterType="UserVO"
+	<insert id="InsertUser" parameterType="UserVO"
 		useGeneratedKeys="true" keyProperty="userno">
 			<![CDATA[
 				INSERT INTO TBL_USER (userid, userpw) 
