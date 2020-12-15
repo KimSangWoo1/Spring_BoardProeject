@@ -1,4 +1,4 @@
-package com.test.myapp.tutorial.dao;
+package com.test.myapp.board.dao;
 
 import com.test.myapp.tutorial.vo.MemberVO;
 

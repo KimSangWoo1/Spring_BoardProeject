@@ -1,4 +1,4 @@
-package com.test.myapp.board;
+package com.test.myapp.board.dao;
 
 import java.util.List;
 import java.util.Map;

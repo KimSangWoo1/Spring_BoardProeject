@@ -1,4 +1,4 @@
-package com.test.myapp.tutorial.dao;
+package com.test.myapp.board.dao;
 
 import java.util.HashMap;
 import java.util.Map;

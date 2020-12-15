@@ -2,10 +2,14 @@
 <!DOCTYPE configuration
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
- 
+
 <configuration>
 	<typeAliases>
-		<typeAlias alias="MemberVO" type="com.test.myapp.tutorial.vo.MemberVO" />
-		<typeAlias alias="ProductVO" type="com.test.myapp.tutorial.vo.ProductVO" />
+		<typeAlias alias="MemberVO"
+			type="com.test.myapp.tutorial.vo.MemberVO" />
+		<typeAlias alias="ProductVO"
+			type="com.test.myapp.tutorial.vo.ProductVO" />
+		<typeAlias alias="UserVO"
+			type="com.test.myapp.board.vo.UserVO" />
 	</typeAliases>
 </configuration>
