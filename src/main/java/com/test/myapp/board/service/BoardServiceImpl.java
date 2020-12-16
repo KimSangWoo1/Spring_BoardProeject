@@ -23,7 +23,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void boardInsert(Map<String, Object> map) throws Exception {
-		boardDAO.boardInsert(map);
+		 boardDAO.boardInsert(map);
 	}
 
 	@Override

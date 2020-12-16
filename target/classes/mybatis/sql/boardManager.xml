@@ -16,40 +16,38 @@
         ]]>
 	</select>
 	<!-- useGeneratedKeys="true" keyProperty="IDX" AutoInCrement 사용했기에 적어줘야 함 -->
-	<insert id="boardInsert" parameterType="hashmap" useGeneratedKeys="true" keyProperty="IDX">
+	<insert id="boardInsert" parameterType="hashmap" useGeneratedKeys="true" keyProperty="idx">
 		<![CDATA[
-            INSERT INTO board_table
+            INSERT INTO tbl_board
 			(
-				TITLE,
-				CONTENTS,
-				CLICK_CNT,
-				DELYN,
-				CREATE_DATE,
-				CREATE_ID
+				title,
+				content,
+				hit_count,
+				create_time,
+				create_id
 			)
 			VALUES
 			(
 				#{title},
-				#{contents},
+				#{content},
 				0,
-				'N',
 				NOW(),
-				'ADMIN'
+				#{create_id}
 			)
         ]]>
 	</insert>
-	<!--  
-	<select id="boardUpdateView" parameterType="hashMap" resultMap="hashMap">
+ 
+	<select id="boardUpdateView" parameterType="hashMap" resultType="hashMap">
 		<![CDATA[ 
-			SELECT IDX, TITLE, CLICK_CNT, CREATE_DATE FROM board_table WHERE DELYN='N' AND IDX=${BOARDNUM}
+			SELECT title, content FROM tbl_board WHERE idx=#{idx} 
 		]]>
 	</select>
-	-->
+
 	<update id="boardUpdate" parameterType="hashmap">
 		<![CDATA[ 
-			UPDATE board_table
+			UPDATE tbl_board
 			SET
-				TITLE = #{TITLE},
+				title = #{TITLE},
 				CONTENTS = #{CONTENTS},
 			WHERE
 				IDX = ${BOARDNUM}

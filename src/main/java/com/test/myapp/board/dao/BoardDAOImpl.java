@@ -32,7 +32,7 @@ public class BoardDAOImpl implements BoardDAO {
 
 	public Map<String, Object> boardUpdateView(Map<String, Object> map) {
 
-		return sqlSession.selectMap("board.boardUpdateView", (String) map.get("boardNum"));
+		return sqlSession.selectOne("board.boardUpdateView", map);
 	}
 
 }

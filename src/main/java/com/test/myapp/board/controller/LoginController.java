@@ -30,7 +30,7 @@ public class LoginController {
 	// 1.로그인 ajax
 	@RequestMapping(value = "/loginChk", method = RequestMethod.POST)
 	@ResponseBody
-	public HashMap<String, String> loginChk(HttpServletRequest request, HttpSession session) {
+	public HashMap<String, String> loginChk(HttpServletRequest request) {
 		HashMap<String, String> result = new HashMap<String, String>();
 		Map<String, Object> map = new HashMap<String, Object>();
 
@@ -40,16 +40,16 @@ public class LoginController {
 		map.put("id", id);
 		map.put("pw", pw);
 		// getSession 세션생성 하는데 만약 기존에 생성된 세션이 있다면 기존 Session을 반환
-		session = request.getSession();
+		HttpSession session = request.getSession();
 		boolean check = userService.LoginUserService(map, session);
 
 		if (check) {
 			String Msg = "로그인 성공";
 			String Code = "0";
-
+			session.setAttribute("userid", id);
 			result.put("Msg", Msg);
 			result.put("Code", Code);
-
+			log.info("로그인 성공");
 		} else {
 			String Msg = "아이디와 비밀번호를 확인하세요.";
 			String Code = "1";

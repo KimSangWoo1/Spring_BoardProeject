@@ -27,10 +27,10 @@
 		</tr>
 		<tbody>
 			<tr>
-				<td>게시글 작성</td>
+				<td><a id="go_boardWrite" href="/myapp/boardWrite/">게시글 작성</a></td>
 			</tr>
 			<tr>
-				<td>게시글 수정</td>
+				<td><a id="go_boardList" href="/myapp/boardList/">게시글 목록</a></td>
 			</tr>
 		</tbody>
 </table>
@@ -46,6 +46,7 @@
             <th scope="col">글번호</th>
             <th scope="col">제목</th>
             <th scope="col">조회수</th>
+            <th scope="col">작성자</th>
             <th scope="col">작성일</th>
         </tr>
     </thead>
@@ -54,9 +55,10 @@
             <c:when test="${fn:length(list) > 0}">
                 <c:forEach items="${list }" var="row">
                     <tr>
-                        <td>${row.idx }</td>
+                        <td><a name="no" href="/myapp/boardUpdateView?no=${row.idx}">${row.idx}</a></td>
                         <td>${row.title }</td>
                         <td>${row.hit_count }</td>
+                        <td>${row.create_id }</td>
                         <td>${row.create_time }</td>
                     </tr>
                 </c:forEach>
@@ -70,5 +72,26 @@
           
     </tbody>
 </table>
+
+<script type="text/javascript">
+		$(document).ready(function() {
+			$("#go_boardList").on('click', function() {
+				GoBoardList();
+			})
+			$("#go_boardWrite").on('click', function() {
+				GoBoardWrite();
+			})
+		});
+		
+		function GoBoardList(){
+			location.reload();
+		}
+		
+		function GoBoardWrite(){
+			window.location.href = "/myapp/boardWrite";
+		}
+		
+
+</script>
 </body>
 </html>
