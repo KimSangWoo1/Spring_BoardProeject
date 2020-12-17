@@ -38,5 +38,11 @@ public class BoardDAOImpl implements BoardDAO {
 
 		return sqlSession.selectOne("board.boardUpdateView", map);
 	}
+	
+	//5.게시글 조회수 올리기
+	@Override
+	public void boardAddHitCount(Map<String, Object> map) {
+		sqlSession.selectOne("board.boardAddHitCount", map);
+	}
 
 }

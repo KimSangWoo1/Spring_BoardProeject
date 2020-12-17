@@ -45,10 +45,9 @@ public class BoardController {
 	//게시글 작성 버튼 클릭 -> 게시판 DB에 삽입
 	@RequestMapping(value="board/boardInsert.do", method =RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView boardInsert(@RequestParam("title") String title,
-									@RequestParam("content") String content,HttpServletRequest request) throws Exception {
+	public ModelAndView boardInsert(HttpServletRequest request) throws Exception {
 		log.info("게시글 작성 완료");
-		
+					
 		HttpSession session = request.getSession();
 		String create_id = session.getAttribute("userid").toString();
 		
@@ -59,7 +58,11 @@ public class BoardController {
 		}
 		//게시글 작성 진행
 		else {
+			mv= new ModelAndView("redirect:boardList.do/");	
 			Map<String,Object> map = new HashMap<String,Object>();
+			
+			String title = request.getParameter("title");
+			String content = request.getParameter("content");
 			
 			map.put("title", title);
 			map.put("content", content);
@@ -68,8 +71,7 @@ public class BoardController {
 			log.info(title);
 			log.info(content);
 			boardService.boardInsert(map);
-			
-			mv= new ModelAndView("redirect:boardList.do/");	
+
 		}
 		return mv;
 	}
@@ -104,4 +106,5 @@ public class BoardController {
 		
 		return mv;
 	}
+	
 }

@@ -19,7 +19,7 @@
    <article>
 		<div class="container" role="main">
 			<h2>게시글 작성 폼</h2>
-			<form name="form" id="form" role="form" method="post" action="${pageContext.request.contextPath}/board/boardInsert.do">
+			<form name="form" id="form" method="post" action="${pageContext.request.contextPath}/board/boardInsert.do">
 				<div class="mb-3">
 					<label for="title">제목</label>
 					<input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력해 주세요">

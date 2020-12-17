@@ -13,5 +13,8 @@ public interface BoardDAO {
 
 	//3. 게시글 상세보기
 	Map<String, Object> boardUpdateView(Map<String, Object> map);
+	
+	//4.게시글 조회수 올리기
+	void boardAddHitCount(Map<String, Object> map);
 
 }

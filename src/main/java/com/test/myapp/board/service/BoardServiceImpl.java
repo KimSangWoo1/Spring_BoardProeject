@@ -31,6 +31,18 @@ public class BoardServiceImpl implements BoardService {
 	//3. 게시글 상세보기
 	@Override
 	public Map<String, Object> boardUpateView(Map<String, Object> map) {
+
+		//게시글 정보 가져오기 
+		 Map<String, Object> map2 = boardDAO.boardUpdateView(map);
+		 
+		//조회수 올리기
+		int hit_count = (int) map2.get("hit_count");
+		System.out.println("조회수 : "+hit_count);
+		
+		map.put("hit_count", hit_count+1);
+		boardDAO.boardAddHitCount(map);
+		
+		//DB에서 가져온 게시글 정보 컨트롤러로 보내기
 		return boardDAO.boardUpdateView(map);
 	}
 

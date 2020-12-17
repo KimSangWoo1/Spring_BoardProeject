@@ -52,11 +52,9 @@
 					</tr>
 				</c:otherwise>
 			</c:choose>
-
 		</tbody>
 	</table>
 </div>
-	
 
 	<script type="text/javascript">
 		$(document).ready(function() {
