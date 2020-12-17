@@ -7,37 +7,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/bootstrap.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/bootstrap.min.css">
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 <title>게시글 작성</title>
 </head>
 <body>
-   <form id="form" action="${pageContext.request.contextPath}/board/boardInsert.do/" method="get" >
-      <table>
-         <colgroup>
-            <col width="100px"/>
-            <col width="200px"/>
-         </colgroup>
-         <caption>게시글 작성</caption>
-         <tbody>
-            <tr>
-               <th scope="row">제목</th>
-               <td><input type="text" id="title" name="title"></input></td>
-            </tr>
-            <tr>
-               <td colspan="2"><textarea rows="10" cols="50" title="내용" id="content" name="content"></textarea>
-            </tr>
-         </tbody>
-      </table>
-   </form>
+<%@include file="../../include/sidebar.jsp" %> 
+   <article>
+		<div class="container" role="main">
+			<h2>게시글 작성 폼</h2>
+			<form name="form" id="form" role="form" method="post" action="${pageContext.request.contextPath}/board/boardInsert.do">
+				<div class="mb-3">
+					<label for="title">제목</label>
+					<input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력해 주세요">
+				</div>
+
+				<div class="mb-3">
+					<label for="content">내용</label>
+					<textarea class="form-control" rows="5" name="content" id="content" placeholder="내용을 입력해 주세요" ></textarea>
+				</div>
+			</form>
+			<div >
+				<button type="button" class="btn btn-sm btn-success" id="board_write"  onclick="boardInsert();">저장</button>
+				<button type="button" class="btn btn-sm btn-danger" id="board_list" onclick="boardList();">취소</button>
+			</div>
+		</div>
+	</article>
    
-      <input type="button" id="board_write" onclick="boardInsert();" value="작성하기" form="form">
-      <input type="submit" id="board_list" onclick="boardList();"  value="목록으로" form="form">
    <script type="text/javascript">
 	   $(document).ready(function(){
 
 	   });
 	     function boardInsert(){
-           $("#form").submit();
+	  		var boardForm = document.form;
+			var title = boardForm.title.value;
+			var content = boardForm.content.value;
+			//NPE Check
+			if (!title || !content) {
+				alert("제목과 내용을 입력하세요");
+			} else {
+				 $("#form").submit();
+			}
          }
          function boardList(){
           	location.href ="${pageContext.request.contextPath}/board/boardList.do/";

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.test.myapp.board.service.BoardService;
@@ -42,7 +43,8 @@ public class BoardController {
 	}
 	
 	//게시글 작성 버튼 클릭 -> 게시판 DB에 삽입
-	@RequestMapping(value="board/boardInsert.do", method =RequestMethod.GET)
+	@RequestMapping(value="board/boardInsert.do", method =RequestMethod.POST)
+	@ResponseBody
 	public ModelAndView boardInsert(@RequestParam("title") String title,
 									@RequestParam("content") String content,HttpServletRequest request) throws Exception {
 		log.info("게시글 작성 완료");
@@ -67,7 +69,7 @@ public class BoardController {
 			log.info(content);
 			boardService.boardInsert(map);
 			
-			mv= new ModelAndView("redirect:board/boardList.do/");	
+			mv= new ModelAndView("redirect:boardList.do/");	
 		}
 		return mv;
 	}

@@ -29,8 +29,8 @@
 	      <input type="password" class="form-control" id="pw" name="pw" placeholder="Enter password">
 	    </div>	
 	  </form>
-	  <input type="button" class="btn btn-primary" id="login_submit" value="로그인" form="form"/>
-	  <input type="button" class="btn btn-primary" id="go_signup" value="회원가입"/>
+	  <input type="button" class="btn btn-success" id="login_submit" value="로그인" form="form"/>
+	  <input type="button" class="btn btn-info" id="go_signup" value="회원가입"/>
 	</div>
 	<script type="text/javascript">
 		$(document).ready(function() {

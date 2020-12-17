@@ -32,8 +32,8 @@
 	      <input type="password" class="form-control" id="pw"  name="pw" placeholder="New password">
 	    </div>	
 	  </form>
-	  <input type="button" class="btn btn-primary" id="signup_submit" value="회원가입" form="form"/>
-	  <input type="button" class="btn btn-primary" id="go_login" value="취소"/>
+	  <input type="button" class="btn btn-success" id="signup_submit" value="회원가입" form="form"/>
+	  <input type="button" class="btn btn-danger" id="go_login" value="취소"/>
 	</div>
 
    <script type="text/javascript">

@@ -10,17 +10,35 @@
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 </head>
 <body>
-<div class ="col-md-3">
-	<div class="panel panel-info">
-		<h3 class="panel-title">게시글 기능</h3>
-	</div>
-	
-	<ul class="list-group">
-		<li class="list-group-item"><a href="/myapp/board/boardWrite.do/">게시글 작성</a>
-		<li class="list-group-item"><a href="/myapp/board/boardList.do">게시글 목록</a>
-		<li class="list-group-item"><a href="/myapp/logout.do">로그아웃</a>	
-	</ul>
-</div>
+
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Spring_Board</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExample">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/myapp/board/boardList.do/">게시글 목록 </a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/myapp/board/boardWrite.do/">게시글 작성</a>
+      </li>
+  	  <li class="nav-item">
+        <a class="nav-link" href="/myapp/logout.do">로그아웃</a>
+      </li>
+
+    </ul>
+
+    <form class="form-inline my-2 my-md-0">
+      <input class="form-control" type="text" placeholder="Search">
+    </form>
+
+  </div>
+
+</nav>
+
 
 </body>
 </html>
