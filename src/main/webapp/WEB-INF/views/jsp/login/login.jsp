@@ -1,37 +1,37 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/bootstrap.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/bootstrap.min.css">
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 
-<title>Insert title here</title>
+<title>ë¡œê·¸ì¸</title>
 </head>
-<body>
-	<form id="form" name="loginForm"
-		action="${pageContext.request.contextPath}/login_click.do/" method="get">
-		<table>
-			<colgroup>
-				<col width="100px" />
-				<col width="200px" />
-			</colgroup>
-			<caption>·Î±×ÀÎ</caption>
-			<tbody>
-				<tr>
-					<th scope="row">¾ÆÀÌµğ</th>
-					<td><input type="text" id="id" name="id"></input></td>
-				</tr>
-				<tr>
-					<th scope="row">ºñ¹Ğ¹øÈ£</th>
-					<td><input type="password" id="pw" name="pw"></input></td>
-				</tr>
-			</tbody>
-		</table>
-	</form>
 
-	<input type="button" id="login_submit" value="·Î±×ÀÎ" form="form">
-	<input type="button" id="go_signup" value="È¸¿ø°¡ÀÔ">
+<body>
+
+   <div class="container p-3 bg-dark text-white ">
+      <h1 class="text-center">ë¡œê·¸ì¸ í˜ì´ì§€</h1>
+   </div>
+
+	<div class="container">
+	  <form id="form" name="loginForm">
+	    <div class="form-group">
+	      <label for="text">ì•„ì´ë””</label>
+	      <input type="text" class="form-control" id="id" name="id" placeholder="Enter id">
+	    </div>
+	    <div class="form-group">
+	      <label for="pw">ë¹„ë°€ë²ˆí˜¸</label>
+	      <input type="password" class="form-control" id="pw" name="pw" placeholder="Enter password">
+	    </div>	
+	  </form>
+	  <input type="button" class="btn btn-primary" id="login_submit" value="ë¡œê·¸ì¸" form="form"/>
+	  <input type="button" class="btn btn-primary" id="go_signup" value="íšŒì›ê°€ì…"/>
+	</div>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#login_submit").on('click', function() {
@@ -47,7 +47,7 @@
 			var userid = loginForm.id.value;
 			var userpw = loginForm.pw.value;
 			if (!userid || !userpw) {
-				alert("¾ÆÀÌµğ¿Í ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä");
+				alert("ì•„ì´ë””ì™€ ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”");
 			} else {
 				loginCheck();
 			}
@@ -81,5 +81,4 @@
 		}
 	</script>
 </body>
-
 </html>

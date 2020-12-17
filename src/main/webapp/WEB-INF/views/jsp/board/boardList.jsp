@@ -1,82 +1,64 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>first</title>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<title>스프링 게시판</title>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/bootstrap.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/bootstrap.min.css">
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 </head>
 <body>
-<h2 align="center">게시판 목록</h2>
-<style>
-    table, th, td {
-        border: 1px solid #bcbcbc;
-      }
-	td {
-        text-align: center;
-      }
+	<%@include file="../../include/sidebar.jsp" %> 
 
-</style>
-<table align="left">
-	<colgroup>
-	<col width="100%" height="100%"/>
-	</colgroup>
-	<thead>
-		<tr>
-			<th scope="col"> 기능 </th>
-		</tr>
+<div class="container">
+	<table class="table table-striped table-hover" align="center">
+		<colgroup>
+			<col width="10%" />
+			<col width="*" />
+			<col width="15%" />
+			<col width="20%" />
+		</colgroup>
+		<thead>
+			<tr>
+				<th scope="col">글번호</th>
+				<th scope="col">제목</th>
+				<th scope="col">조회수</th>
+				<th scope="col">작성자</th>
+				<th scope="col">작성일</th>
+			</tr>
+		</thead>
 		<tbody>
-			<tr>
-				<td><a id="go_boardWrite" href="/myapp/board/boardWrite.do/">게시글 작성</a></td>
-			</tr>
-			<tr>
-				<td><a id="go_boardList" href="/myapp/board/boardList.do/">게시글 목록</a></td>
-			</tr>
-			<tr>
-				<td><a id="go_boardList" href="/myapp/board/logout.do/">로그아웃</a></td>
-			</tr>
-		</tbody>
-</table>
-<table align="center" >
-    <colgroup>
-        <col width="10%"/>
-        <col width="*"/>
-        <col width="15%"/>
-        <col width="20%"/>
-    </colgroup>
-    <thead>
-        <tr>
-            <th scope="col">글번호</th>
-            <th scope="col">제목</th>
-            <th scope="col">조회수</th>
-            <th scope="col">작성자</th>
-            <th scope="col">작성일</th>
-        </tr>
-    </thead>
-    <tbody>
-        <c:choose>
-            <c:when test="${fn:length(list) > 0}">
-                <c:forEach items="${list }" var="row">
-                    <tr>
-                        <td><a name="no" href="/myapp/board/boardUpdateView.do?no=${row.idx}">${row.idx}</a></td>
-                        <td>${row.title }</td>
-                        <td>${row.hit_count }</td>
-                        <td>${row.create_id }</td>
-                        <td>${row.create_time }</td>
-                    </tr>
-                </c:forEach>
-            </c:when>
-            <c:otherwise>
-                <tr>
-                    <td colspan="4">조회된 결과가 없습니다.</td>
-                </tr>
-            </c:otherwise>
-        </c:choose>
-          
-    </tbody>
-</table>
+			<c:choose>
+				<c:when test="${fn:length(list) > 0}">
+					<c:forEach items="${list }" var="row">
+						<tr>
+							<td><a name="no"
+								href="/myapp/board/boardUpdateView.do?no=${row.idx}">${row.idx}</a></td>
+							<td>${row.title }</td>
+							<td>${row.hit_count }</td>
+							<td>${row.create_id }</td>
+							<td>${row.create_time }</td>
+						</tr>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="4">조회된 결과가 없습니다.</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
 
-<script type="text/javascript">
+		</tbody>
+	</table>
+</div>
+	
+
+	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#go_boardList").on('click', function() {
 				GoBoardList();
@@ -85,16 +67,14 @@
 				GoBoardWrite();
 			})
 		});
-		
-		function GoBoardList(){
+
+		function GoBoardList() {
 			location.reload();
 		}
-		
-		function GoBoardWrite(){
+
+		function GoBoardWrite() {
 			window.location.href = "/myapp/board/boardWrite.do";
 		}
-		
-
-</script>
+	</script>
 </body>
 </html>

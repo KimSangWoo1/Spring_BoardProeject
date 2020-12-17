@@ -7,32 +7,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<title>게시글 작성</title>
+<link rel="stylesheet"
+   href="<%=request.getContextPath()%>/css/bootstrap.css">
+<link rel="stylesheet"
+   href="<%=request.getContextPath()%>/css/bootstrap.min.css">
+<meta charset="EUC-KR">
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+<title>회원가입</title>
 </head>
 <body>
-   <form id="form" name="signupform" action="${pageContext.request.contextPath}/signUpChk.do/" method="post" >
-      <table>
-         <colgroup>
-            <col width="100px"/>
-            <col width="200px"/>
-         </colgroup>
-         <caption>회원가입</caption>
-         <tbody>
-            <tr>
-               <th scope="row">아이디</th>
-               <td><input type="text" id="id" name="id"></input></td>
-            </tr>
-             <tr>
-               <th scope="row">비밀번호</th>
-               <td><input type="password" id="pw" name="pw"></input></td>
-            </tr>
-         </tbody>
-      </table>
-   </form>
-   
-      <input type="button" id="signup_submit"  value="회원가입" form="form">
-      <input type="button" id="go_login"   value="취소">
+
+<div class="container p-3 bg-primary  text-white ">
+      <h1 class="text-center">회원가입 페이지</h1>
+   </div>
+
+	<div class="container">
+	  <form id="form" name="signupform" action="${pageContext.request.contextPath}/signUpChk.do/" method="post">
+	    <div class="form-group">
+	      <label for="text">아이디</label>
+	      <input type="text" class="form-control" id="id" name="id" placeholder="New id">
+	    </div>
+	    <div class="form-group">
+	      <label for="pw">비밀번호</label>
+	      <input type="password" class="form-control" id="pw"  name="pw" placeholder="New password">
+	    </div>	
+	  </form>
+	  <input type="button" class="btn btn-primary" id="signup_submit" value="회원가입" form="form"/>
+	  <input type="button" class="btn btn-primary" id="go_login" value="취소"/>
+	</div>
+
    <script type="text/javascript">
 	   $(document).ready(function(){
 		   $("#signup_submit").on('click', function() {
@@ -54,7 +57,7 @@
 	    	 }    
          }
          function goLogin(){
-          	location.href ="${pageContext.request.contextPath}/login.do";
+          	location.href ="${pageContext.request.contextPath}/";
          }
          
          function DuplicatedUserCheck(){

@@ -80,7 +80,7 @@ public class LoginController {
 	public ModelAndView Logout(HttpSession session) throws Exception {
 		
 		userService.LogoutService(session);
-		ModelAndView mv = new ModelAndView("/jsp/login/signup");
+		ModelAndView mv = new ModelAndView("redirect:/");
 		return mv;
 	}
 }
