@@ -20,19 +20,32 @@ public class UserDAOImpl implements UserDAO{
 	//1.회원 아이디 비밀번호 조회 DB에서 데이터 가져오기
 	@Override
 	public UserVO CheckUser(UserVO userVO) {		
-	
 		return sqlSession.selectOne("login.CheckUser", userVO);
 	}
-	//2. 회원 가입
+	
+	//2.회원 중복 확인
+	@Override
+	public boolean DuplicateUser(String userid) {
+		String resultId =sqlSession.selectOne("login.DuplicateUser", userid);
+		if(resultId==null ||resultId.trim().isEmpty()) {
+			return false;
+		}else {
+			System.out.println("중복 아이디 : "+ resultId);
+			return true;
+		}
+		
+	
+	}
+	
+	//3.회원 가입
 	@Override
 	public int InsertUser(UserVO userVO) {
-	
 		return sqlSession.insert("login.InsertUser", userVO);
 	}
-	//3. 로그아웃
+	//4.로그아웃
 	@Override
 	public void Logout(HttpSession session) {
-		session.invalidate();	
+		
 	}
 
 }

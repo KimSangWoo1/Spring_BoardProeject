@@ -17,7 +17,7 @@
 		WHERE userid = #{userid}
 	</select>
 	
-	<select id="readWrthPW">
+	<select id="readWithPW">
 		SELECT *
 		FROM TBL_MEMBER
 		WHERE userid = #{userid} AND userpw =#{userpw}

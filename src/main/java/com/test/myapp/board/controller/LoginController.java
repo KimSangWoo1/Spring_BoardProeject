@@ -27,10 +27,17 @@ public class LoginController {
 	@Resource(name = "userService")
 	private UserService userService;
 
-	// 1.로그인 ajax
-	@RequestMapping(value = "/loginChk", method = RequestMethod.POST)
+	//0. 로그인 페이지 화면
+	@RequestMapping("/login.do")
+	public ModelAndView LogingForm () {
+		ModelAndView mv = new ModelAndView("/jsp/login/login");
+		return mv;
+	}
+	
+	// 1.로그인 시도 ajax
+	@RequestMapping(value = "/loginChk.do", method = RequestMethod.POST)
 	@ResponseBody
-	public HashMap<String, String> loginChk(HttpServletRequest request) {
+	public HashMap<String, String> LoginChk(HttpServletRequest request) {
 		HashMap<String, String> result = new HashMap<String, String>();
 		Map<String, Object> map = new HashMap<String, Object>();
 
@@ -61,12 +68,19 @@ public class LoginController {
 	}
 
 	// 2. 회원가입 페이지로 이동
-	@RequestMapping("/signup")
+	@RequestMapping("/signup.do")
 	public ModelAndView Login() throws Exception {
-		ModelAndView mv = new ModelAndView("/signup");
+		ModelAndView mv = new ModelAndView("/jsp/login/signup");
 		return mv;
 	}
 
-	// 3.메인 페이지
+	// 3.로그아웃
 
+	@RequestMapping("/logout.do")
+	public ModelAndView Logout(HttpSession session) throws Exception {
+		
+		userService.LogoutService(session);
+		ModelAndView mv = new ModelAndView("/jsp/login/signup");
+		return mv;
+	}
 }

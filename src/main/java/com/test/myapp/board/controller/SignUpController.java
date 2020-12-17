@@ -24,7 +24,7 @@ Logger log = Logger.getLogger(this.getClass().toGenericString());
 	@Resource(name="userService")
 	private UserService userService;
 	//1. 회원가입 진행
-	@RequestMapping(value="/signUpChk", method = RequestMethod.POST)
+	@RequestMapping(value="/signUpChk.do", method = RequestMethod.POST)
 	@ResponseBody
 	public HashMap <String, String> SignUpChk(HttpServletRequest httpServletRequest, HttpSession session) {
 		Map<String, Object> map = new HashMap<String,Object>();
@@ -32,32 +32,45 @@ Logger log = Logger.getLogger(this.getClass().toGenericString());
 		
 		String id = httpServletRequest.getParameter("id");
 		String pw = httpServletRequest.getParameter("pw");
-		map.put("id", id);
-		map.put("pw", pw);
-
+		
 		String Msg ;
 		String Code ;
-		//1. 중복 확인	
-		boolean check = userService.CheckUserService(map);
-		if(check) {
-			log.info("회원 중복");
-			Msg = "회원중복";
+		
+		if(id==null || id.trim().isEmpty()) {
+			log.info("아이디 미 입력 ");
+			Msg = "아이디를 입력하세요";
+			Code = "1";
+		}else if(pw==null || pw.trim().isEmpty()) {
+			log.info("비밀번호 미 입력  ");
+			Msg = "비밀번호를 입력하세요";
 			Code = "1";
 		}else {
-			//2. 회원가입 처리 진행
-			check = userService.InsertUserService(map);
-			
-			if(check) {
-				log.info("회원 가입 성공");
-				Msg = "회원가입 성공";
-				Code = "0";
-			}
-			else {
-				log.info("회원가입 실패 ");
-				Msg = "실패";
+			map.put("id", id);
+			map.put("pw", pw);
+
+			//1. 중복 확인	
+			boolean userCheck = userService.DuplicateUserService(id);
+			if(userCheck) {
+				log.info("회원 중복");
+				Msg = "회원중복";
 				Code = "1";
+			}else {
+				//2. 회원가입 처리 진행
+				boolean insertCheck = userService.InsertUserService(map);
+				
+				if(insertCheck) {
+					log.info("회원 가입 성공");
+					Msg = "회원가입 성공";
+					Code = "0";
+				}
+				else {
+					log.info("회원가입 실패 ");
+					Msg = "실패";
+					Code = "1";
+				}	
 			}	
 		}
+		
 		result.put("Msg", Msg);
 		result.put("Code", Code);
 		
@@ -65,7 +78,7 @@ Logger log = Logger.getLogger(this.getClass().toGenericString());
 	}
 	
 	//2. 로그인화면으로 이동
-	@RequestMapping(value="/cancle_click")
+	@RequestMapping(value="/cancle_click.do")
 	public ModelAndView Login() {
 		ModelAndView mv = new ModelAndView("/login");
 		return mv;

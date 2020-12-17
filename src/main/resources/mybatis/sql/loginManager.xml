@@ -2,47 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="login">
-
+	<!-- 로그인시 아이디 비밀번호 조회 -->
 	<select id="CheckUser" resultType="UserVO">
 		SELECT *
-		FROM TBL_USER
+		FROM tbl_user
 		WHERE
-		userid = #{userid} AND userpw =#{userpw}
+		userid = #{userid} AND userpw = #{userpw}
 	</select>
-
+	
+	<!--  회원가입시 회원 중복 점검 -->
+	<select id="DuplicateUser" resultType="String">
+		SELECT userid
+		FROM tbl_user
+		WHERE
+		userid = '${userid}'
+	</select>
+	
+	<!-- 회원가입 -->
 	<insert id="InsertUser" parameterType="UserVO"
 		useGeneratedKeys="true" keyProperty="userno">
 			<![CDATA[
-				INSERT INTO TBL_USER (userid, userpw) 
+				INSERT INTO tbl_user (userid, userpw) 
 							VALUES (#{userid} ,#{userpw})		
 			]]>
 	</insert>
-	<!-- useGeneratedKeys="true" keyProperty="IDX" AutoInCrement 사용했기에 적어줘야 
-		함 -->
-	<insert id="boardInsert" parameterType="hashmap"
-		useGeneratedKeys="true" keyProperty="IDX">
-		<![CDATA[
-            INSERT INTO board_table
-			(
-				TITLE,
-				CONTENTS,
-				CLICK_CNT,
-				DELYN,
-				CREATE_DATE,
-				CREATE_ID
-			)
-			VALUES
-			(
-				#{title},
-				#{contents},
-				0,
-				'N',
-				NOW(),
-				'ADMIN'
-			)
-        ]]>
-	</insert>
-
 
 </mapper>
 

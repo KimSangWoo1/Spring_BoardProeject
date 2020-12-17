@@ -25,74 +25,80 @@ public class BoardController {
 	@Resource(name="boardService")
 	private BoardService boardService;
 	
-	@RequestMapping("/boardList")
+	@RequestMapping("board/boardList.do")
 	   public ModelAndView openBoardList(Map<String, Object>map)throws Exception{
-	      ModelAndView mv = new ModelAndView("/board/boardList");
+	      ModelAndView mv = new ModelAndView("/jsp/board/boardList");
 	      
 	      List<Map<String, Object>> list = boardService.selectBoardList(map);
 	      mv.addObject("list",list);
 	      return mv;
 	   }
 	
-	//게시판 jsp에 작성
-	@RequestMapping("/boardWrite")
+	//게시글 작성 페이지로 이동
+	@RequestMapping("board/boardWrite.do")
 	public ModelAndView boardWrite(Map<String,Object> map) throws Exception{
-		ModelAndView mv = new ModelAndView("/board/boardWrite");
+		ModelAndView mv = new ModelAndView("/jsp/board/boardWrite");
 		return mv;
 	}
-	//게시판 DB에 삽입
-	@RequestMapping(value="/boardInsert", method =RequestMethod.GET)
+	
+	//게시글 작성 버튼 클릭 -> 게시판 DB에 삽입
+	@RequestMapping(value="board/boardInsert.do", method =RequestMethod.GET)
 	public ModelAndView boardInsert(@RequestParam("title") String title,
 									@RequestParam("content") String content,HttpServletRequest request) throws Exception {
 		log.info("게시글 작성 완료");
+		
 		HttpSession session = request.getSession();
-	
 		String create_id = session.getAttribute("userid").toString();
 		
-		Map<String,Object> map = new HashMap<String,Object>();
-		
-		map.put("title", title);
-		map.put("content", content);
-		map.put("create_id", create_id);
-		
-		log.info(title);
-		log.info(content);
-		boardService.boardInsert(map);
-		
-		ModelAndView mv= new ModelAndView("redirect:/boardList/");
-		
-		
+		ModelAndView mv;
+		//세션 만료
+		if(create_id==null) {
+			mv= new ModelAndView("redirect:login.do/");	
+		}
+		//게시글 작성 진행
+		else {
+			Map<String,Object> map = new HashMap<String,Object>();
+			
+			map.put("title", title);
+			map.put("content", content);
+			map.put("create_id", create_id);
+			
+			log.info(title);
+			log.info(content);
+			boardService.boardInsert(map);
+			
+			mv= new ModelAndView("redirect:board/boardList.do/");	
+		}
 		return mv;
 	}
-	
-	@RequestMapping(value="/boardUpdateView", method = RequestMethod.GET)
+	//게시글 상세 페이지로 이동
+	@RequestMapping(value="board/boardUpdateView.do", method = RequestMethod.GET)
 	public ModelAndView boardUpdateView(@RequestParam("no") int no) {
 		Map<String, Object> map = new HashMap<String,Object>();
 		
-	
 		map.put("idx", no);
-		ModelAndView mv = new ModelAndView("/board/boardUpdateView");
+		ModelAndView mv = new ModelAndView("/jsp/board/boardUpdateView");
 		
 		Map<String,Object> rtnMap = boardService.boardUpateView(map);
 		log.info(rtnMap.get("title").toString());
 		mv.addObject("rtnMap", rtnMap);
 		return mv;
 	}
-	
-	@RequestMapping(value="/boardUpdate", method = RequestMethod.POST)
+	//게시글 수정
+	@RequestMapping(value="board/boardUpdate.do", method = RequestMethod.POST)
 	public ModelAndView boardUpdate(HttpServletRequest httpServletRequest) {
 		Map<String, Object> map = new HashMap<String,Object>();
 		
-		int boardNum = Integer.parseInt(httpServletRequest.getParameter("boardNum"));
+		int idx = Integer.parseInt(httpServletRequest.getParameter("idx"));
 		String title = httpServletRequest.getParameter("title");
-		String contents= httpServletRequest.getParameter("contents");
+		String content= httpServletRequest.getParameter("content");
 		
-		map.put("boardNum", boardNum);
+		map.put("idx", idx);
 		map.put("title", title);
-		map.put("contents", contents);
+		map.put("content", content);
 		
 		boardService.boardUpdate(map);
-		ModelAndView mv = new ModelAndView("redirect:/boardList/");
+		ModelAndView mv = new ModelAndView("redirect:board/boardList.do/");
 		
 		return mv;
 	}

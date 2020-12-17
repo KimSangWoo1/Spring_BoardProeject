@@ -60,7 +60,13 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 	
-	//3. 회원가입
+	//3. 회원 중복 확인
+	@Override
+	public boolean DuplicateUserService(String userid) {		
+		return  userDAO.DuplicateUser(userid);
+	}
+	
+	//4. 회원가입
 	@Override
 	public boolean InsertUserService(Map<String, Object> map) {
 		boolean result = false;
@@ -81,14 +87,10 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 
-	//4. 로그아웃
+	//5. 로그아웃
 	@Override
 	public void LogoutService(HttpSession session) {
-		
-		userDAO.Logout(session);
+		session.invalidate();	
+		//userDAO.Logout(session);
 	}
-
-
-
-
 }

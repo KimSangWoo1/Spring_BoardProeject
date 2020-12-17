@@ -33,13 +33,17 @@
 	<!-- 인터셉터 설정 -->
 	<interceptors>
 		<interceptor>
-			<mapping path="/interceptor/doA"/>
-			<mapping path="/interceptor/doB"/>
-			<beans:bean id="sampleInterceptor" class="com.test.myapp.tutorial.interceptor.SampleInterceptor"/>
+			<mapping path="/board/*.do"/>
+			<beans:bean id="loginInterceptor" class="com.test.myapp.board.interceptor.LoginInterceptor"/>
 		</interceptor>
 		<!-- 다른 인터셉터 추가시 -->
 		<!--  여기다가 <interceptor> 태그 추가해서 넣으면 됨 -->
 	</interceptors>
 
+
+	<!--  리소스 설정 -->
+	<resources location="/resources/assets" mapping="/assets/**"></resources>
+		<resources location="/resources/css" mapping="/css/**"></resources>
+			<resources location="/resources/js" mapping="/js/**"></resources>
 </beans:beans>
 
