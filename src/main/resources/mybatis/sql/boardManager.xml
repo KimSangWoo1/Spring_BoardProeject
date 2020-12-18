@@ -63,8 +63,10 @@
 		]]>	
 	</select>
 	
+	<!-- 패이지 갯수 만큼 가져오기 -->
 	<select id="boardPagingList" resultType="hashmap">
 		SELECT 
+			idx,
 			title,
 			content,
 			hit_count,
@@ -74,6 +76,8 @@
 			tbl_board
 		LIMIT #{startList}, #{listSize}
 	</select>
+	
+	
 		<!-- 게시글 수정 -->
 	<update id="boardUpdate" parameterType="hashmap">
 		<![CDATA[ 

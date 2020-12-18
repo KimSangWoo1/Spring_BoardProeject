@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+	<!-- 게시글 리스트 가져오기 -->
+	<select id="selectBoardList" parameterType="hashmap"
+		resultType="hashmap">
+		<![CDATA[
+            SELECT
+                idx,
+                title,
+                hit_count,
+                create_time,
+                create_id
+            FROM
+                tbl_board 
+            ORDER BY idx DESC
+        ]]>
+	</select>
+	<!-- 게시글 작성 useGeneratedKeys="true" keyProperty="IDX" AutoInCrement 사용했기에 적어줘야 함 -->
+	<insert id="boardInsert" parameterType="hashmap"
+		useGeneratedKeys="true" keyProperty="idx">
+		<![CDATA[
+            INSERT INTO tbl_board
+			(
+				title,
+				content,
+				hit_count,
+				create_time,
+				create_id
+			)
+			VALUES
+			(
+				#{title},
+				#{content},
+				0,
+				NOW(),
+				#{create_id}
+			)
+        ]]>
+	</insert>
+	
+	<!-- 게시글 상세 내용 -->
+	<select id="boardUpdateView" parameterType="hashMap"
+		resultType="hashMap">
+		<![CDATA[ 
+			SELECT title, content, hit_count FROM tbl_board WHERE idx=#{idx} 
+		]]>
+	</select>
+	
+	<!-- 조회수 올리기 -->
+	<update id="boardAddHitCount" parameterType="hashMap">
+		<![CDATA[ 
+			UPDATE tbl_board  SET hit_count = #{hit_count} WHERE idx=#{idx} 
+		]]>
+	</update>
+	
+	<!-- 게시글 전채 갯수  -->
+	<select id="boardListSize" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) FROM tbl_board
+		]]>	
+	</select>
+	
+	<!-- 패이지 갯수 만큼 가져오기 -->
+	<select id="boardPagingList" resultType="hashmap">
+		SELECT 
+			idx,
+			title,
+			content,
+			hit_count,
+			create_time,
+			create_id
+		FROM 
+			tbl_board
+		LIMIT #{startList}, #{listSize}
+	</select>
+		<!-- 게시글 수정 -->
+	<update id="boardUpdate" parameterType="hashmap">
+		<![CDATA[ 
+			UPDATE tbl_board
+			SET
+				title = #{TITLE},
+				CONTENTS = #{CONTENTS},
+			WHERE
+				IDX = ${BOARDNUM}
+		]]>
+	</update>
+</mapper>
+
+<!-- CDATA 태그안에서는 전부 문자열로 치환함 < , > ( ) 같은걸 쓰면 오류 날 경우를 없애줌 -->
+<!-- https://java119.tistory.com/70 -->

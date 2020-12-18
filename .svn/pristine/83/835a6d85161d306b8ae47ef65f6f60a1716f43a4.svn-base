@@ -1,0 +1,63 @@
+package com.test.myapp.board.service;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.test.myapp.board.dao.BoardDAO;
+
+
+@Service("boardService")
+public class BoardServiceImpl implements BoardService {
+
+	@Resource(name="boardDAO")
+	private BoardDAO boardDAO;
+	
+	//1.게시글 리스트 보기
+	@Override
+	public List<Map<String, Object>> SelectBoardListService(Map<String, Object> map) {
+		return boardDAO.selectBoardList(map);
+	}
+
+	//2. 게시글 작성
+	@Override
+	public void BoardInsertService(Map<String, Object> map) throws Exception {
+		 boardDAO.boardInsert(map);
+	}
+
+	//3. 게시글 상세보기
+	@Override
+	public Map<String, Object> BoardUpateViewService(Map<String, Object> map) {
+
+		//게시글 정보 가져오기 
+		 Map<String, Object> resultMap = boardDAO.boardUpdateView(map);
+		 //조회수 올리기
+		 BoardAddHitCountService(resultMap);
+
+		//DB에서 가져온 게시글 정보 컨트롤러로 보내기
+		return boardDAO.boardUpdateView(resultMap);
+	}
+	
+	//4. 조회수 올리기
+	@Override
+	public void BoardAddHitCountService(Map<String, Object> map) {
+	
+		//조회수 가져오기
+		int hit_count = (int) map.get("hit_count");
+		//조회수 +1 업데이트 하기
+		map.put("hit_count", hit_count+1);
+		boardDAO.boardAddHitCount(map);
+	}
+
+	/*
+	//5.게시글 수정
+	@Override
+	public List<Map<String, Object>> boardUpdateService(Map<String, Object> map) {
+		return (List<Map<String, Object>>) boardDAO.boardUpdateView(map);
+	}
+	*/
+	
+}
