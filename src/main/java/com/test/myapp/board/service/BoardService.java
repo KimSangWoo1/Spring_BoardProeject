@@ -12,6 +12,9 @@ public interface BoardService {
 	Map<String, Object> BoardUpateViewService(Map<String, Object> map);
 	//4. 게시글 조회수 올리기
 	void BoardAddHitCountService(Map<String, Object> map);
+	
+	//5. 게시물 총 갯수 가져오기
+	int BoardListCnt();
 	/*
 	//5. 게시글 수정
 	List<Map<String, Object>> boardUpdateService(Map<String, Object> map);

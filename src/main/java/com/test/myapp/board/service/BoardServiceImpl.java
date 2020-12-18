@@ -19,13 +19,13 @@ public class BoardServiceImpl implements BoardService {
 	//1.게시글 리스트 보기
 	@Override
 	public List<Map<String, Object>> SelectBoardListService(Map<String, Object> map) {
-		return boardDAO.selectBoardList(map);
+		return boardDAO.SelectBoardList(map);
 	}
 
 	//2. 게시글 작성
 	@Override
 	public void BoardInsertService(Map<String, Object> map) throws Exception {
-		 boardDAO.boardInsert(map);
+		 boardDAO.BoardInsert(map);
 	}
 
 	//3. 게시글 상세보기
@@ -33,7 +33,7 @@ public class BoardServiceImpl implements BoardService {
 	public Map<String, Object> BoardUpateViewService(Map<String, Object> map) {
 
 		//게시글 정보 가져오기 
-		 Map<String, Object> resultMap = boardDAO.boardUpdateView(map);
+		 Map<String, Object> resultMap = boardDAO.BoardUpdateView(map);
 		 //조회수 올리기
 		 BoardAddHitCountService(resultMap);
 
@@ -49,8 +49,18 @@ public class BoardServiceImpl implements BoardService {
 		int hit_count = (int) map.get("hit_count");
 		//조회수 +1 업데이트 하기
 		map.put("hit_count", hit_count+1);
-		boardDAO.boardAddHitCount(map);
+		boardDAO.BoardAddHitCount(map);
 	}
+
+	
+	//5. 게시글 총 갯수 가져오기
+	@Override
+	public int BoardListCnt() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	
 
 	/*
 	//5.게시글 수정

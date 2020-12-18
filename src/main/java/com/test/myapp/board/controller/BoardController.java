@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.test.myapp.board.service.BoardService;
+import com.test.myapp.board.util.Pagination;
 
 @Controller
 public class BoardController {
@@ -34,7 +35,7 @@ public class BoardController {
 	      List<Map<String, Object>> list = boardService.SelectBoardListService(map);
 	      mv.addObject("list",list);
 	      return mv;
-	   }
+	}
 	
 	//2.게시글 작성 페이지로 이동
 	@RequestMapping("board/boardWrite.do")
@@ -90,6 +91,22 @@ public class BoardController {
 	}
 	
 	
+	//5.게시글 뷰페이징
+		@RequestMapping(value="board/boardPagingList.do", method = RequestMethod.GET)
+		   public ModelAndView BoardPagingList(@RequestParam(defaultValue="1") int curPage)throws Exception{
+		      ModelAndView mv = new ModelAndView("/jsp/board/boardViewPaging");
+		      
+		      
+		      //1. 총게시물 수 가져오기
+		      int listCnt = boardService.BoardListCnt();
+		      //2 페이징 셋팅하기
+		      Pagination pagination = new Pagination(20,curPage);
+		      
+		      
+		      //3. 모델 전송과 뷰 선택하기
+	
+		      return mv;
+		}
 	/*
 	//게시글 수정
 	@RequestMapping(value="board/boardUpdate.do", method = RequestMethod.POST)
@@ -110,4 +127,6 @@ public class BoardController {
 		return mv;
 	}
 	*/
+		
+	
 }
