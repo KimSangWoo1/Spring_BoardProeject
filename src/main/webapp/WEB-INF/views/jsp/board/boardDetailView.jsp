@@ -31,13 +31,13 @@
 				location.href = "${pageContext.request.contextPath}/board/boardPagingList.do?curPage=${curPage}";
 			})
 			$("#go_update").on('click', function() {
-				location.href = "${pageContext.request.contextPath}/board/boardUpdateView.do?idx=${idx}&curPage=${curPage}";
+				location.href = "${pageContext.request.contextPath}/board/boardUpdateView.do?idx=${boardVO.idx}&curPage=${curPage}";
 			})
 			$("#go_delete").on('click', function() {
-				location.href = "${pageContext.request.contextPath}/board/boardDelete.do?idx=${idx}&curPage=${curPage}";
+				location.href = "${pageContext.request.contextPath}/board/boardDelete.do?idx=${boardVO.idx}&curPage=${curPage}";
 			})
 		});
-
+		
 		function login_Click() {
 			var loginForm = document.loginForm;
 			var userid = loginForm.id.value;

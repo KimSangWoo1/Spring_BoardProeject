@@ -31,7 +31,7 @@ public class BoardController {
 	
 	//1.게시글 목록 페이지 이동
 	@RequestMapping("board/boardList.do")
-	   public ModelAndView BoardList(Map<String, Object>map)throws Exception{
+	   public ModelAndView boardList(Map<String, Object>map)throws Exception{
 	      ModelAndView mv = new ModelAndView("/jsp/board/boardList");
 	      
 	      List<Map<String, Object>> list = boardService.selectBoardListService(map);
@@ -49,7 +49,7 @@ public class BoardController {
 	//3.게시글 작성 버튼 클릭 -> 게시판 DB에 삽입
 	@RequestMapping(value="board/boardInsert.do", method =RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView BoardInsert(HttpServletRequest request) throws Exception {
+	public ModelAndView boardInsert(HttpServletRequest request) throws Exception {
 		log.info("게시글 작성 완료");
 					
 		HttpSession session = request.getSession();
@@ -81,7 +81,7 @@ public class BoardController {
 	}
 	//4.게시글 상세 페이지로 이동
 	@RequestMapping(value="board/boardDetailView.do", method = RequestMethod.GET)
-	public ModelAndView boardDetailView(HttpServletRequest request, @RequestParam("idx") int idx ,@RequestParam("curPage") int curPage) {
+	public ModelAndView boardDetailView(HttpServletRequest request, @RequestParam int idx ,@RequestParam(defaultValue = "1") int curPage) {
 
 		//일기 내용 가져오기
 		BoardVO boardVO = boardService.boardUpateViewService(idx);
@@ -110,44 +110,41 @@ public class BoardController {
 	
 	
 	//5.게시글 뷰페이징
-		@RequestMapping(value="board/boardPagingList.do", method = RequestMethod.GET)
-		   public ModelAndView BoardPagingList(@RequestParam(defaultValue="1") int curPage)throws Exception{
-		      ModelAndView mv = new ModelAndView("/jsp/board/boardViewPaging");	      
-		      
-		      //1. 총게시물 수 가져오기
-		      int listCnt = boardService.boardListCnt();
-		      //2 페이징 셋팅하기
-		      Pagination pagination = new Pagination(listCnt, curPage);
-		      //3. 게시글 페이징으로 가져오기
-		      List<BoardVO> boardList = boardService.BoardPagingService(pagination);
-		      for(BoardVO board : boardList) {
-		    	  System.out.println(board.getTitle());
-		      }
-		      //4. 모델 전송과 뷰 선택하기
-		      mv.addObject("boardList",boardList);
-		      mv.addObject("pagination", pagination);
-		      return mv;
+	@RequestMapping(value = "board/boardPagingList.do", method = RequestMethod.GET)
+	public ModelAndView boardPagingList(@RequestParam(defaultValue = "1") int curPage) throws Exception {
+		ModelAndView mv = new ModelAndView("/jsp/board/boardViewPaging");
+
+		// 1. 총게시물 수 가져오기
+		int listCnt = boardService.boardListCnt();
+		// 2 페이징 셋팅하기
+		Pagination pagination = new Pagination(listCnt, curPage);
+		// 3. 게시글 페이징으로 가져오기
+		List<BoardVO> boardList = boardService.boardPagingService(pagination);
+		for (BoardVO board : boardList) {
+			System.out.println(board.getTitle());
 		}
-	/*
+		// 4. 모델 전송과 뷰 선택하기
+		mv.addObject("boardList", boardList);
+		mv.addObject("pagination", pagination);
+		return mv;
+	}
+	
+	//6. 게시판 삭제
+	@RequestMapping(value = "board/boardDelete.do", method = RequestMethod.GET)
+	public ModelAndView boardDelete(@RequestParam int idx, @RequestParam int curPage) throws Exception {
+		ModelAndView mv = new ModelAndView("redirect:boardPagingList.do?curpage="+curPage);
+		boardService.boardDeleteService(idx);
+		return mv;
+	}
+		
 	//게시글 수정
-	@RequestMapping(value="board/boardUpdate.do", method = RequestMethod.POST)
-	public ModelAndView boardUpdate(HttpServletRequest httpServletRequest) {
-		Map<String, Object> map = new HashMap<String,Object>();
-		
-		int idx = Integer.parseInt(httpServletRequest.getParameter("idx"));
-		String title = httpServletRequest.getParameter("title");
-		String content= httpServletRequest.getParameter("content");
-		
-		map.put("idx", idx);
-		map.put("title", title);
-		map.put("content", content);
-		
-		boardService.BoardUpdate(map);
-		ModelAndView mv = new ModelAndView("redirect:board/boardList.do/");
+	@RequestMapping(value="board/boardUpdateView.do", method = RequestMethod.GET)
+	public ModelAndView boardUpdate(@RequestParam BoardVO boardVO, @RequestParam int curPage) throws Exception {
+		ModelAndView mv = new ModelAndView("/jsp/board/boardUpdateView");
 		
 		return mv;
 	}
-	*/
+	
 		
 	
 }

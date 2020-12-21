@@ -26,6 +26,8 @@ public interface BoardDAO {
 	//6. 게시글 페이징으로 가져오기
 	List<BoardVO> boardPaging(Pagination pagination);
 	
+	//7. 게시글 삭제
+	void boardDelete(int idx);
 	/*
 	//5. 게시물 수정
 	List<Map<String, Object>> boardUpdate(Map<String, Object> map);

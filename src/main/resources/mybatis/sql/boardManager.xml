@@ -79,6 +79,12 @@
 		 LIMIT #{startIndex}, #{pageSize}
 		]]>
 	</select>
+	
+	<delete id="boardDelete" parameterType="int">
+		<![CDATA[
+			DELETE FROM tbl_board WHERE idx=${idx}
+		]]>
+	</delete>
 
 		<!-- 게시글 수정 -->
 	<update id="boardUpdate" parameterType="hashmap">

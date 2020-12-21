@@ -54,6 +54,11 @@ public class BoardDAOImpl implements BoardDAO {
 		System.out.println("페이지 번호 :"+pagination.getCurPage());
 		return sqlSession.selectList("board.boardPagingList",pagination);
 	}
+
+	@Override
+	public void boardDelete(int idx) {
+		sqlSession.delete("board.boardDelete",idx);
+	}
 	
 	/*
 	//5.게시글 수정

@@ -18,8 +18,9 @@ public interface BoardService {
 	//5. 게시물 총 갯수 가져오기
 	int boardListCnt();
 	//6. 게시글 페이징으로 가져오기
-	List<BoardVO> BoardPagingService(Pagination pagination);
-	
+	List<BoardVO> boardPagingService(Pagination pagination);
+	//7. 게시판 삭제
+	void boardDeleteService(int idx);
 	/*
 	//5. 게시글 수정
 	List<Map<String, Object>> boardUpdateService(Map<String, Object> map);

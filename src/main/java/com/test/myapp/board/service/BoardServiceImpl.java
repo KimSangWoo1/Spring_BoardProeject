@@ -32,26 +32,26 @@ public class BoardServiceImpl implements BoardService {
 
 	//3. 게시글 상세보기
 	@Override
-	public Map<String, Object> boardUpateViewService(Map<String, Object> map) {
+	public BoardVO boardUpateViewService(int idx) {
 
-		//게시글 정보 가져오기 
-		 Map<String, Object> resultMap = boardDAO.boardUpdateView(map);
+		 //게시글 정보 가져오기 
+		 BoardVO boardVO = boardDAO.boardUpdateView(idx);
 		 //조회수 올리기
-		 boardAddHitCountService(resultMap);
+		 boardAddHitCountService(boardVO);
 
 		//DB에서 가져온 게시글 정보 컨트롤러로 보내기
-		return resultMap;
+		return boardVO;
 	}
 	
 	//4. 조회수 올리기
 	@Override
-	public void boardAddHitCountService(Map<String, Object> map) {
+	public void boardAddHitCountService(BoardVO boardVO) {
 	
 		//조회수 가져오기
-		int hit_count = (int) map.get("hit_count");
+		int hit_count = boardVO.getHit_count();
 		//조회수 +1 업데이트 하기
-		map.put("hit_count", hit_count+1);
-		boardDAO.boardAddHitCount(map);
+		boardVO.setHit_count(hit_count+1);
+		boardDAO.boardAddHitCount(boardVO);
 	}
 	
 	//5. 게시글 총 갯수 가져오기
@@ -62,14 +62,16 @@ public class BoardServiceImpl implements BoardService {
 
 	//6. 게시글 페이징으로 가져오기
 	@Override
-	public List<BoardVO> BoardPagingService(Pagination pagination) {
+	public List<BoardVO> boardPagingService(Pagination pagination) {
 
 		return boardDAO.boardPaging(pagination);
 	}
+	//7. 게시판 삭제
+	@Override
+	public void boardDeleteService(int idx) {
+		boardDAO.boardDelete(idx);
+	}
 	
-	//6. 게시글 페이징으로 가져오기
-	
-
 	
 
 	/*
