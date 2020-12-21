@@ -4,11 +4,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 	
+	private String userid;
 	//전
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
@@ -16,7 +19,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		//세션 받아오기
 		HttpSession session = request.getSession();
 		//저장된 세션 값 가져오기
-		String userid = (String) session.getAttribute("userid");
+		this.userid = (String) session.getAttribute("userid");
 		//저장된 세션 값이 없음 --> 로그인 진행
 		if(userid==null ||userid.trim().isEmpty()) {	
 			System.out.println("비 로그인");
@@ -42,6 +45,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         // TODO Auto-generated method stub
         super.afterCompletion(request, response, handler, ex);
     }
+	
+	public String getUserid() {
+		return userid;
+	}
 	
 }
 

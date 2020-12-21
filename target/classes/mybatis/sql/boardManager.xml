@@ -42,15 +42,14 @@
 	</insert>
 	
 	<!-- 게시글 상세 내용 -->
-	<select id="boardUpdateView" parameterType="hashMap"
-		resultType="hashMap">
+	<select id="boardUpdateView" parameterType="int" resultType="BoardVO">
 		<![CDATA[ 
-			SELECT title, content, hit_count FROM tbl_board WHERE idx=#{idx} 
+			SELECT * FROM tbl_board WHERE idx=${idx} 
 		]]>
 	</select>
 	
 	<!-- 조회수 올리기 -->
-	<update id="boardAddHitCount" parameterType="hashMap">
+	<update id="boardAddHitCount" parameterType="BoardVO">
 		<![CDATA[ 
 			UPDATE tbl_board  SET hit_count = #{hit_count} WHERE idx=#{idx} 
 		]]>

@@ -15,10 +15,10 @@ public interface BoardDAO {
 	void boardInsert(Map<String, Object> map);
 
 	//3. 게시글 상세보기
-	Map<String, Object> boardUpdateView(Map<String, Object> map);
+	BoardVO boardUpdateView(int idx);
 	
 	//4.게시글 조회수 올리기
-	void boardAddHitCount(Map<String, Object> map);
+	void boardAddHitCount(BoardVO boardVO);
 	
 	//5. 게시글  총 갯수 가져오기
 	int boardAllListCnt();

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.test.myapp.board.interceptor.LoginInterceptor;
 import com.test.myapp.board.service.BoardService;
 import com.test.myapp.board.util.Pagination;
 import com.test.myapp.board.vo.BoardVO;
@@ -80,14 +81,30 @@ public class BoardController {
 	}
 	//4.게시글 상세 페이지로 이동
 	@RequestMapping(value="board/boardDetailView.do", method = RequestMethod.GET)
-	public ModelAndView boardDetailView(@RequestParam("idx") int idx) {
-		Map<String, Object> map = new HashMap<String,Object>();
-		
-		map.put("idx", idx);
-		ModelAndView mv = new ModelAndView("/jsp/board/boardDetailView");
+	public ModelAndView boardDetailView(HttpServletRequest request, @RequestParam("idx") int idx ,@RequestParam("curPage") int curPage) {
 
-		Map<String,Object> rtnMap = boardService.boardUpateViewService(map);
-		mv.addObject("rtnMap", rtnMap);
+		//일기 내용 가져오기
+		BoardVO boardVO = boardService.boardUpateViewService(idx);
+		//세션에 저장된 아이디와  일기 작성자 비교를 위한  세션 아이디 가져오기
+		
+		ModelAndView mv = new ModelAndView("/jsp/board/boardDetailView");
+		mv.addObject("boardVO", boardVO);
+		mv.addObject("curPage",curPage);
+		
+		HttpSession session = request.getSession();
+		String session_id = (String) session.getAttribute("userid");
+		String user_id = boardVO.getCreate_id();
+		
+		//같은 유저인지 비교
+		boolean edit;
+		if(session_id.equals(user_id)) {
+			edit = true;
+		}else {
+			edit = false;
+		}
+		
+		mv.addObject("edit", edit);
+		
 		return mv;
 	}
 	

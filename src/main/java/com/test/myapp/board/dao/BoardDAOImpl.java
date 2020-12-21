@@ -30,15 +30,15 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	//3.게시글 상세 보기
-	public Map<String, Object> boardUpdateView(Map<String, Object> map) {
+	public BoardVO boardUpdateView(int idx) {
 
-		return sqlSession.selectOne("board.boardUpdateView", map);
+		return sqlSession.selectOne("board.boardUpdateView", idx);
 	}
 	
 	//4.게시글 조회수 올리기
 	@Override
-	public void boardAddHitCount(Map<String, Object> map) {
-		sqlSession.selectOne("board.boardAddHitCount", map);
+	public void boardAddHitCount(BoardVO boardVO) {
+		sqlSession.selectOne("board.boardAddHitCount", boardVO);
 	}
 
 	//5. 게시글 총 갯수 가져오기
@@ -54,9 +54,6 @@ public class BoardDAOImpl implements BoardDAO {
 		System.out.println("페이지 번호 :"+pagination.getCurPage());
 		return sqlSession.selectList("board.boardPagingList",pagination);
 	}
-
-
-	
 	
 	/*
 	//5.게시글 수정
