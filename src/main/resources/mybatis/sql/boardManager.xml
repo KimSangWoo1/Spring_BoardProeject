@@ -64,7 +64,8 @@
 	</select>
 	
 	<!-- 패이지 갯수 만큼 가져오기 -->
-	<select id="boardPagingList" resultType="hashmap">
+	<select id="boardPagingList" parameterType="int" resultType="BoardVO">
+		<![CDATA[
 		SELECT 
 			idx,
 			title,
@@ -74,10 +75,12 @@
 			create_id
 		FROM 
 			tbl_board
-		LIMIT #{startList}, #{listSize}
+		WHERE idx > 0		
+		ORDER BY idx DESC, create_time DESC
+		 LIMIT #{startIndex}, #{pageSize}
+		]]>
 	</select>
-	
-	
+
 		<!-- 게시글 수정 -->
 	<update id="boardUpdate" parameterType="hashmap">
 		<![CDATA[ 

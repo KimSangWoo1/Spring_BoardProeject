@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.test.myapp.board.service.BoardService;
 import com.test.myapp.board.util.Pagination;
+import com.test.myapp.board.vo.BoardVO;
 
 @Controller
 public class BoardController {
@@ -32,7 +33,7 @@ public class BoardController {
 	   public ModelAndView BoardList(Map<String, Object>map)throws Exception{
 	      ModelAndView mv = new ModelAndView("/jsp/board/boardList");
 	      
-	      List<Map<String, Object>> list = boardService.SelectBoardListService(map);
+	      List<Map<String, Object>> list = boardService.selectBoardListService(map);
 	      mv.addObject("list",list);
 	      return mv;
 	}
@@ -72,7 +73,7 @@ public class BoardController {
 			
 			log.info(title);
 			log.info(content);
-			boardService.BoardInsertService(map);
+			boardService.boardInsertService(map);
 
 		}
 		return mv;
@@ -85,7 +86,7 @@ public class BoardController {
 		map.put("idx", idx);
 		ModelAndView mv = new ModelAndView("/jsp/board/boardDetailView");
 
-		Map<String,Object> rtnMap = boardService.BoardUpateViewService(map);
+		Map<String,Object> rtnMap = boardService.boardUpateViewService(map);
 		mv.addObject("rtnMap", rtnMap);
 		return mv;
 	}
@@ -94,17 +95,20 @@ public class BoardController {
 	//5.게시글 뷰페이징
 		@RequestMapping(value="board/boardPagingList.do", method = RequestMethod.GET)
 		   public ModelAndView BoardPagingList(@RequestParam(defaultValue="1") int curPage)throws Exception{
-		      ModelAndView mv = new ModelAndView("/jsp/board/boardViewPaging");
-		      
+		      ModelAndView mv = new ModelAndView("/jsp/board/boardViewPaging");	      
 		      
 		      //1. 총게시물 수 가져오기
-		      int listCnt = boardService.BoardListCnt();
+		      int listCnt = boardService.boardListCnt();
 		      //2 페이징 셋팅하기
-		      Pagination pagination = new Pagination(20,curPage);
-		      
-		      
-		      //3. 모델 전송과 뷰 선택하기
-	
+		      Pagination pagination = new Pagination(listCnt, curPage);
+		      //3. 게시글 페이징으로 가져오기
+		      List<BoardVO> boardList = boardService.BoardPagingService(pagination);
+		      for(BoardVO board : boardList) {
+		    	  System.out.println(board.getTitle());
+		      }
+		      //4. 모델 전송과 뷰 선택하기
+		      mv.addObject("boardList",boardList);
+		      mv.addObject("pagination", pagination);
 		      return mv;
 		}
 	/*

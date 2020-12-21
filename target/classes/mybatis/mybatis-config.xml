@@ -11,5 +11,7 @@
 			type="com.test.myapp.tutorial.vo.ProductVO" />
 		<typeAlias alias="UserVO"
 			type="com.test.myapp.board.vo.UserVO" />
+		<typeAlias alias="BoardVO"
+			type="com.test.myapp.board.vo.BoardVO" />
 	</typeAliases>
 </configuration>
