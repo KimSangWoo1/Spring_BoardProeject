@@ -10,11 +10,13 @@
 <body>
 <%@include file="../../include/header.jsp" %> 
 
-<div class="container">
-	<div class="card">
-		<div class="card-header"><h3>${boardVO.title}</h3></div>
-		<div class="cord-body" style="height:300px">${boardVO.content}</div>
-	</div>	
+<div class="container">	
+	<form method="post">
+		<div class="card">
+			<div class="card-header"><h3>${boardVO.title}</h3></div>
+			<div class="cord-body" style="height:300px">${boardVO.content}</div>
+		</div>	
+	</form>
 </div>
 
 	  <input type="button" class="btn btn-info" id="go_list" value="목록" />

@@ -18,68 +18,61 @@ public class BoardServiceImpl implements BoardService {
 	@Resource(name="boardDAO")
 	private BoardDAO boardDAO;
 	
-	//1.°Ô½Ã±Û ¸®½ºÆ® º¸±â
+	//1.ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 	@Override
 	public List<Map<String, Object>> selectBoardListService(Map<String, Object> map) {
 		return boardDAO.selectBoardList(map);
 	}
 
-	//2. °Ô½Ã±Û ÀÛ¼º
+	//2. ï¿½Ô½Ã±ï¿½ ï¿½Û¼ï¿½
 	@Override
 	public void boardInsertService(Map<String, Object> map) throws Exception {
 		 boardDAO.boardInsert(map);
 	}
 
-	//3. °Ô½Ã±Û »ó¼¼º¸±â
+	//3. ï¿½Ô½Ã±ï¿½ ï¿½ó¼¼ºï¿½ï¿½ï¿½
 	@Override
 	public BoardVO boardUpateViewService(int idx) {
-
-		 //°Ô½Ã±Û Á¤º¸ °¡Á®¿À±â 
+		 //ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 		 BoardVO boardVO = boardDAO.boardUpdateView(idx);
-		 //Á¶È¸¼ö ¿Ã¸®±â
-		 boardAddHitCountService(boardVO);
 
-		//DB¿¡¼­ °¡Á®¿Â °Ô½Ã±Û Á¤º¸ ÄÁÆ®·Ñ·¯·Î º¸³»±â
+		//DBï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½Ñ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		return boardVO;
 	}
 	
-	//4. Á¶È¸¼ö ¿Ã¸®±â
+	//4. ï¿½ï¿½È¸ï¿½ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½
 	@Override
 	public void boardAddHitCountService(BoardVO boardVO) {
 	
-		//Á¶È¸¼ö °¡Á®¿À±â
+		//ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		int hit_count = boardVO.getHit_count();
-		//Á¶È¸¼ö +1 ¾÷µ¥ÀÌÆ® ÇÏ±â
+		//ï¿½ï¿½È¸ï¿½ï¿½ +1 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ï±ï¿½
 		boardVO.setHit_count(hit_count+1);
 		boardDAO.boardAddHitCount(boardVO);
 	}
 	
-	//5. °Ô½Ã±Û ÃÑ °¹¼ö °¡Á®¿À±â
+	//5. ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@Override
 	public int boardListCnt() {
 		return boardDAO.boardAllListCnt();
 	}
 
-	//6. °Ô½Ã±Û ÆäÀÌÂ¡À¸·Î °¡Á®¿À±â
+	//6. ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½Â¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@Override
 	public List<BoardVO> boardPagingService(Pagination pagination) {
 
 		return boardDAO.boardPaging(pagination);
 	}
-	//7. °Ô½ÃÆÇ »èÁ¦
+	//7. ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@Override
 	public void boardDeleteService(int idx) {
 		boardDAO.boardDelete(idx);
-	}
-	
-	
-
-	/*
-	//5.°Ô½Ã±Û ¼öÁ¤
+	}	
+	//8.ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@Override
-	public List<Map<String, Object>> boardUpdateService(Map<String, Object> map) {
-		return (List<Map<String, Object>>) boardDAO.boardUpdateView(map);
+	public void boardUpdateService(BoardVO boardVO) {
+		boardDAO.boardUpdate(boardVO);
 	}
-	*/
+	
 	
 }

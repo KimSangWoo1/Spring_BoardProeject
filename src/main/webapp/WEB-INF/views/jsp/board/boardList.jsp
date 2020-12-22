@@ -38,7 +38,7 @@
 					<c:forEach items="${list }" var="row">
 						<tr>
 							<td><a name="idx"
-								href="/myapp/board/boardDetailView.do?idx=${row.idx}">${row.idx}</a></td>
+								href="/myapp/board/boardDetailView.do?idx=${row.idx}&hit_count=1">${row.idx}</a></td>
 							<td>${row.title }</td>
 							<td>${row.hit_count }</td>
 							<td>${row.create_id }</td>

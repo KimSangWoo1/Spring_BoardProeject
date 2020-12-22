@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,7 +30,7 @@ public class BoardController {
 	@Resource(name="boardService")
 	private BoardService boardService;
 	
-	//1.°Ô½Ã±Û ¸ñ·Ï ÆäÀÌÁö ÀÌµ¿
+	//1.ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 	@RequestMapping("board/boardList.do")
 	   public ModelAndView boardList(Map<String, Object>map)throws Exception{
 	      ModelAndView mv = new ModelAndView("/jsp/board/boardList");
@@ -39,28 +40,28 @@ public class BoardController {
 	      return mv;
 	}
 	
-	//2.°Ô½Ã±Û ÀÛ¼º ÆäÀÌÁö·Î ÀÌµ¿
+	//2.ï¿½Ô½Ã±ï¿½ ï¿½Û¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 	@RequestMapping("board/boardWrite.do")
 	public ModelAndView BoardWrite(Map<String,Object> map) throws Exception{
 		ModelAndView mv = new ModelAndView("/jsp/board/boardWrite");
 		return mv;
 	}
 	
-	//3.°Ô½Ã±Û ÀÛ¼º ¹öÆ° Å¬¸¯ -> °Ô½ÃÆÇ DB¿¡ »ðÀÔ
+	//3.ï¿½Ô½Ã±ï¿½ ï¿½Û¼ï¿½ ï¿½ï¿½Æ° Å¬ï¿½ï¿½ -> ï¿½Ô½ï¿½ï¿½ï¿½ DBï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value="board/boardInsert.do", method =RequestMethod.POST)
 	@ResponseBody
 	public ModelAndView boardInsert(HttpServletRequest request) throws Exception {
-		log.info("°Ô½Ã±Û ÀÛ¼º ¿Ï·á");
+		log.info("ï¿½Ô½Ã±ï¿½ ï¿½Û¼ï¿½ ï¿½Ï·ï¿½");
 					
 		HttpSession session = request.getSession();
 		String create_id = session.getAttribute("userid").toString();
 		
 		ModelAndView mv;
-		//¼¼¼Ç ¸¸·á
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		if(create_id==null) {
 			mv= new ModelAndView("redirect:login.do/");	
 		}
-		//°Ô½Ã±Û ÀÛ¼º ÁøÇà
+		//ï¿½Ô½Ã±ï¿½ ï¿½Û¼ï¿½ ï¿½ï¿½ï¿½ï¿½
 		else {
 			mv= new ModelAndView("redirect:boardList.do/");	
 			Map<String,Object> map = new HashMap<String,Object>();
@@ -79,13 +80,18 @@ public class BoardController {
 		}
 		return mv;
 	}
-	//4.°Ô½Ã±Û »ó¼¼ ÆäÀÌÁö·Î ÀÌµ¿
+	//4.ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 	@RequestMapping(value="board/boardDetailView.do", method = RequestMethod.GET)
-	public ModelAndView boardDetailView(HttpServletRequest request, @RequestParam int idx ,@RequestParam(defaultValue = "1") int curPage) {
+	public ModelAndView boardDetailView(HttpServletRequest request, @RequestParam int idx ,@RequestParam(defaultValue = "1") int curPage ,@RequestParam(required = false ,defaultValue = "0")int hit_count) {
 
-		//ÀÏ±â ³»¿ë °¡Á®¿À±â
+		//ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		BoardVO boardVO = boardService.boardUpateViewService(idx);
-		//¼¼¼Ç¿¡ ÀúÀåµÈ ¾ÆÀÌµð¿Í  ÀÏ±â ÀÛ¼ºÀÚ ºñ±³¸¦ À§ÇÑ  ¼¼¼Ç ¾ÆÀÌµð °¡Á®¿À±â
+		if(hit_count!=0) {
+			boardService.boardAddHitCountService(boardVO);
+		}
+		
+
+		//ï¿½ï¿½ï¿½Ç¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ï¿½  ï¿½Ï±ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½ñ±³¸ï¿½ ï¿½ï¿½ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		
 		ModelAndView mv = new ModelAndView("/jsp/board/boardDetailView");
 		mv.addObject("boardVO", boardVO);
@@ -95,7 +101,7 @@ public class BoardController {
 		String session_id = (String) session.getAttribute("userid");
 		String user_id = boardVO.getCreate_id();
 		
-		//°°Àº À¯ÀúÀÎÁö ºñ±³
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 		boolean edit;
 		if(session_id.equals(user_id)) {
 			edit = true;
@@ -109,27 +115,27 @@ public class BoardController {
 	}
 	
 	
-	//5.°Ô½Ã±Û ºäÆäÀÌÂ¡
+	//5.ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¡
 	@RequestMapping(value = "board/boardPagingList.do", method = RequestMethod.GET)
 	public ModelAndView boardPagingList(@RequestParam(defaultValue = "1") int curPage) throws Exception {
 		ModelAndView mv = new ModelAndView("/jsp/board/boardViewPaging");
 
-		// 1. ÃÑ°Ô½Ã¹° ¼ö °¡Á®¿À±â
+		// 1. ï¿½Ñ°Ô½Ã¹ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		int listCnt = boardService.boardListCnt();
-		// 2 ÆäÀÌÂ¡ ¼ÂÆÃÇÏ±â
+		// 2 ï¿½ï¿½ï¿½ï¿½Â¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 		Pagination pagination = new Pagination(listCnt, curPage);
-		// 3. °Ô½Ã±Û ÆäÀÌÂ¡À¸·Î °¡Á®¿À±â
+		// 3. ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½Â¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		List<BoardVO> boardList = boardService.boardPagingService(pagination);
 		for (BoardVO board : boardList) {
 			System.out.println(board.getTitle());
 		}
-		// 4. ¸ðµ¨ Àü¼Û°ú ºä ¼±ÅÃÇÏ±â
+		// 4. ï¿½ï¿½ ï¿½ï¿½ï¿½Û°ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 		mv.addObject("boardList", boardList);
 		mv.addObject("pagination", pagination);
 		return mv;
 	}
 	
-	//6. °Ô½ÃÆÇ »èÁ¦
+	//6. ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value = "board/boardDelete.do", method = RequestMethod.GET)
 	public ModelAndView boardDelete(@RequestParam int idx, @RequestParam int curPage) throws Exception {
 		ModelAndView mv = new ModelAndView("redirect:boardPagingList.do?curpage="+curPage);
@@ -137,14 +143,28 @@ public class BoardController {
 		return mv;
 	}
 		
-	//°Ô½Ã±Û ¼öÁ¤
+	//7. ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value="board/boardUpdateView.do", method = RequestMethod.GET)
-	public ModelAndView boardUpdate(@RequestParam BoardVO boardVO, @RequestParam int curPage) throws Exception {
-		ModelAndView mv = new ModelAndView("/jsp/board/boardUpdateView");
+	public ModelAndView boardUpdateView(@RequestParam int idx, @RequestParam int curPage) throws Exception {
+
+		BoardVO boardVO = boardService.boardUpateViewService(idx);
 		
+		ModelAndView mv = new ModelAndView("/jsp/board/boardUpdateView");
+		mv.addObject("curPage",curPage);
+		mv.addObject("boardVO",boardVO);
 		return mv;
 	}
-	
+	//8. ê²Œì‹œê¸€ ìˆ˜ì • ì™„ë£Œ
+	@RequestMapping(value="board/boardUpdate.do", method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView boardUpdate(BoardVO boardVO, Pagination pagination) throws Exception {
 		
+		boardService.boardUpdateService(boardVO);
+		
+		int idx = boardVO.getIdx();
+		int curPage = pagination.getCurPage();
+		ModelAndView mv = new ModelAndView("redirect:boardDetailView.do?idx="+idx+"&curPage="+curPage);	
+		return mv;
+	}
 	
 }

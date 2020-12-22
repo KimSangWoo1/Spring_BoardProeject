@@ -36,7 +36,7 @@
 				<c:when test="${fn:length(boardList) > 0}">
 					<c:forEach items="${boardList}" var="row">
 						<tr>
-							<td><a href="/myapp/board/boardDetailView.do?idx=${row.idx}&curPage=${pagination.curPage}">${row.idx}</a></td>
+							<td><a href="/myapp/board/boardDetailView.do?idx=${row.idx}&curPage=${pagination.curPage}&hit_count=1">${row.idx}</a></td>
 							<td>${row.title }</td>
 							<td>${row.hit_count }</td>
 							<td>${row.create_id }</td>

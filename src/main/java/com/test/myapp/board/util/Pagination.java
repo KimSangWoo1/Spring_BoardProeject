@@ -1,52 +1,53 @@
 package com.test.myapp.board.util;
 
 public class Pagination {
-	// ÇÑ ÆäÀÌÁö´ç °Ô½Ã±Û ¼ö 
+	// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ 
     private int pageSize = 5;
-	// ÇÑ ºí·°(range)´ç ÆäÀÌÁö ¼ö 
+	// ï¿½ï¿½ ï¿½ï¿½(range)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 
     private int rangeSize = 5;  
-    // ÇöÀç ÆäÀÌÁö 
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
     private int curPage = 1;   
-    // ÇöÀç ºí·°(range) 
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½(range) 
     private int curRange = 1; 
-    // ÃÑ °Ô½Ã±Û ¼ö 
+    // ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ 
     private int listCnt; 
-    // ÃÑ ÆäÀÌÁö ¼ö 
+    // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 
     private int pageCnt;
-    // ÃÑ ºí·°(range) ¼ö 
+    // ï¿½ï¿½ ï¿½ï¿½(range) ï¿½ï¿½ 
     private int rangeCnt; 
-    // ½ÃÀÛ ÆäÀÌÁö 
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
     private int startPage = 1;
-    // ³¡ ÆäÀÌÁö 
+    // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
     private int endPage = 1;
-    /// ½ÃÀÛ index 
+    /// ï¿½ï¿½ï¿½ï¿½ index 
     private int startIndex = 0;
 
-	/// ÀÌÀü ÆäÀÌÁö 
+	/// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
     private int prevPage;
-    // ´ÙÀ½ ÆäÀÌÁö 
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
     private int nextPage;
     
+    public Pagination () {}
 	public Pagination (int listCnt,  int curPage){
     
-    	//ÇöÀç ÆäÀÌÁö
+    	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     	this.curPage=curPage;
-    	//ÃÑ °Ô½Ã¹° ¼ö
+    	//ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½
     	this.listCnt=listCnt;
     	
-    	//1. ÀüÃ¼ ÆäÀÌÁö ¼ö   ex) ÀüÃ¼ °Ô½Ã±Û ¼ö/ ÆäÀÌÁö¿¡ º¸¿©Áú °Ô½Ã±Û ¼ö = ÀüÃ¼ ÆäÀÌÁö ¼ö  
+    	//1. ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½   ex) ï¿½ï¿½Ã¼ ï¿½Ô½Ã±ï¿½ ï¿½ï¿½/ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ = ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½  
     	this.pageCnt = (int)Math.ceil(listCnt*1.0/pageSize);
-    	//2. ÀüÃ¼ ºí·° ¼ö  ex)  ÀüÃ¼ ÆäÀÌÁö ¼ö/ º¸¿©Áú ÆäÀÌÁö ¹üÀ§  = ÀüÃ¼ ºí·Ï ¼ö 
+    	//2. ï¿½ï¿½Ã¼ ï¿½ï¿½ ï¿½ï¿½  ex)  ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½/ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½  = ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ ï¿½ï¿½ 
     	this.rangeCnt  = (int)Math.ceil(pageCnt*1.0/rangeSize);
-    //3.ºí·Ï ¼³Á¤ (range Setting)    		
-    	//ÇöÀç ºí·Ï  ex)  ((4-1)/5) +1 = 1  
+    //3.ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (range Setting)    		
+    	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½  ex)  ((4-1)/5) +1 = 1  
     	this.curRange = (int)((curPage-1)/rangeSize) + 1;
-    	//½ÃÀÛ  ÆäÀÌÁö = (ÇöÀç ºí·Ï-1) * ºí·Ï ¹üÀ§ + 1
+    	//ï¿½ï¿½ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ = (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½-1) * ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ + 1
     	this.startPage = (curRange-1)*rangeSize+1;
-    	//³¡ ÆäÀÌÁö = ½ÃÀÛÆäÀÌÁö + ºí·Ï ¹üÀ§ -1
+    	//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ = ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ + ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ -1
     	this.endPage = startPage + rangeSize-1;
     	
-    	//³¡ ÆäÀÌÁö ¾È³Ñµµ·Ï ¼³Á¤
+    	//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½È³Ñµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     	if(endPage>pageCnt) {
     		this.endPage =pageCnt;
     	}
@@ -54,7 +55,7 @@ public class Pagination {
     	this.prevPage = curPage -1;
     	this.nextPage = curPage +1;
     	
-    	//startIndex¼³Á¤
+    	//startIndexï¿½ï¿½ï¿½ï¿½
     	this.startIndex = (curPage-1) * pageSize;
 
     }

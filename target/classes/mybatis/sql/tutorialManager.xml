@@ -10,13 +10,13 @@
 		INSERT INTO TBL_MEMBER( userid, userpw, username, email)
 					 VALUES(#{userid}, #{userpw}, #{username}, #{email})		
 	</insert>
-	
+	<!--  
 	<select id="selectMember" resultType="MemberVO">
 		SELECT *
 		FROM TBL_MEMBER
 		WHERE userid = #{userid}
 	</select>
-	
+	-->
 	<select id="readWithPW">
 		SELECT *
 		FROM TBL_MEMBER

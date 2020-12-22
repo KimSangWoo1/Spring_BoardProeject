@@ -87,14 +87,14 @@
 	</delete>
 
 		<!-- 게시글 수정 -->
-	<update id="boardUpdate" parameterType="hashmap">
+	<update id="boardUpdate" parameterType="BoardVO">
 		<![CDATA[ 
 			UPDATE tbl_board
 			SET
-				title = #{TITLE},
-				CONTENTS = #{CONTENTS},
+				title = #{title},
+				content = #{content}
 			WHERE
-				IDX = ${BOARDNUM}
+				idx = ${idx}
 		]]>
 	</update>
 </mapper>

@@ -18,30 +18,30 @@ public class BoardDAOImpl implements BoardDAO {
 	@Resource(name = "sqlSession")
 	private SqlSessionTemplate sqlSession;
 
-	//1.°Ô½Ã±Û ¸®½ºÆ® º¸±â
+	//1.ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 	public List<Map<String, Object>> selectBoardList(Map<String, Object> map) {
-		// sql Æú´õ¿¡ namespace : board , id: selectList
+		// sql ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ namespace : board , id: selectList
 		return sqlSession.selectList("board.selectBoardList", map);
 	}
 	
-	//2.°Ô½Ã±Û ÀÛ¼º
+	//2.ï¿½Ô½Ã±ï¿½ ï¿½Û¼ï¿½
 	public void boardInsert(Map<String, Object> map) {
 		sqlSession.insert("board.boardInsert", map);
 	}
 
-	//3.°Ô½Ã±Û »ó¼¼ º¸±â
+	//3.ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public BoardVO boardUpdateView(int idx) {
 
 		return sqlSession.selectOne("board.boardUpdateView", idx);
 	}
 	
-	//4.°Ô½Ã±Û Á¶È¸¼ö ¿Ã¸®±â
+	//4.ï¿½Ô½Ã±ï¿½ ï¿½ï¿½È¸ï¿½ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½
 	@Override
 	public void boardAddHitCount(BoardVO boardVO) {
 		sqlSession.selectOne("board.boardAddHitCount", boardVO);
 	}
 
-	//5. °Ô½Ã±Û ÃÑ °¹¼ö °¡Á®¿À±â
+	//5. ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@Override
 	public int boardAllListCnt() {	
 		return sqlSession.selectOne("board.boardListSize");
@@ -49,9 +49,9 @@ public class BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public List<BoardVO> boardPaging(Pagination pagination) {
-		System.out.println("°Ô½Ã±Û Ã¹ ¹øÈ£ :"+pagination.getStartIndex());
-		System.out.println("ÆäÀÌÁö Size :"+pagination.getPageSize());
-		System.out.println("ÆäÀÌÁö ¹øÈ£ :"+pagination.getCurPage());
+		System.out.println("ï¿½Ô½Ã±ï¿½ Ã¹ ï¿½ï¿½È£ :"+pagination.getStartIndex());
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Size :"+pagination.getPageSize());
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ :"+pagination.getCurPage());
 		return sqlSession.selectList("board.boardPagingList",pagination);
 	}
 
@@ -60,12 +60,11 @@ public class BoardDAOImpl implements BoardDAO {
 		sqlSession.delete("board.boardDelete",idx);
 	}
 	
-	/*
-	//5.°Ô½Ã±Û ¼öÁ¤
+	//8.ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@Override
-	public List<Map<String, Object>> boardUpdate(Map<String, Object> map) {
-		return sqlSession.selectList("board.boardUpdate", map);
+	public void boardUpdate(BoardVO boardVO) {
+		sqlSession.update("board.boardUpdate", boardVO);
 	}
-	*/
+	
 
 }

@@ -8,28 +8,28 @@ import com.test.myapp.board.vo.BoardVO;
 
 public interface BoardDAO {
 
-	//1. °Ô½Ã±Û ¸®½ºÆ® º¸±â
+	//1. ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 	List<Map<String, Object>> selectBoardList(Map<String, Object> map);
 
-	//2. °Ô½Ã±Û ÀÛ¼º
+	//2. ï¿½Ô½Ã±ï¿½ ï¿½Û¼ï¿½
 	void boardInsert(Map<String, Object> map);
 
-	//3. °Ô½Ã±Û »ó¼¼º¸±â
+	//3. ï¿½Ô½Ã±ï¿½ ï¿½ó¼¼ºï¿½ï¿½ï¿½
 	BoardVO boardUpdateView(int idx);
 	
-	//4.°Ô½Ã±Û Á¶È¸¼ö ¿Ã¸®±â
+	//4.ï¿½Ô½Ã±ï¿½ ï¿½ï¿½È¸ï¿½ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½
 	void boardAddHitCount(BoardVO boardVO);
 	
-	//5. °Ô½Ã±Û  ÃÑ °¹¼ö °¡Á®¿À±â
+	//5. ï¿½Ô½Ã±ï¿½  ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	int boardAllListCnt();
 	
-	//6. °Ô½Ã±Û ÆäÀÌÂ¡À¸·Î °¡Á®¿À±â
+	//6. ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½Â¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	List<BoardVO> boardPaging(Pagination pagination);
 	
-	//7. °Ô½Ã±Û »èÁ¦
+	//7. ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
 	void boardDelete(int idx);
-	/*
-	//5. °Ô½Ã¹° ¼öÁ¤
-	List<Map<String, Object>> boardUpdate(Map<String, Object> map);
-	*/
+	
+	//8. ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ï¿½ï¿½
+	void boardUpdate(BoardVO boardVO);
+	
 }

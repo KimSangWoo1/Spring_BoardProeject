@@ -7,22 +7,21 @@ import com.test.myapp.board.util.Pagination;
 import com.test.myapp.board.vo.BoardVO;
 
 public interface BoardService {
-	//1. °Ô½Ã±Û ¸®½ºÆ® º¸±â
+	//1. ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 	List<Map<String,Object>> selectBoardListService (Map<String,Object> map);
-	//2. °Ô½Ã±Û ÀÛ¼º
+	//2. ï¿½Ô½Ã±ï¿½ ï¿½Û¼ï¿½
 	void boardInsertService(Map<String,Object>map)throws Exception;
-	//3. °Ô½Ã±Û »ó¼¼º¸±â
+	//3. ï¿½Ô½Ã±ï¿½ ï¿½ó¼¼ºï¿½ï¿½ï¿½
 	BoardVO boardUpateViewService(int idx);
-	//4. °Ô½Ã±Û Á¶È¸¼ö ¿Ã¸®±â
+	//4. ï¿½Ô½Ã±ï¿½ ï¿½ï¿½È¸ï¿½ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½
 	void boardAddHitCountService(BoardVO boardVO);
-	//5. °Ô½Ã¹° ÃÑ °¹¼ö °¡Á®¿À±â
+	//5. ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	int boardListCnt();
-	//6. °Ô½Ã±Û ÆäÀÌÂ¡À¸·Î °¡Á®¿À±â
+	//6. ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½Â¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	List<BoardVO> boardPagingService(Pagination pagination);
-	//7. °Ô½ÃÆÇ »èÁ¦
+	//7. ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	void boardDeleteService(int idx);
-	/*
-	//5. °Ô½Ã±Û ¼öÁ¤
-	List<Map<String, Object>> boardUpdateService(Map<String, Object> map);
-	*/
+	//8. ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
+	void boardUpdateService(BoardVO boardVO);
+	
 }
