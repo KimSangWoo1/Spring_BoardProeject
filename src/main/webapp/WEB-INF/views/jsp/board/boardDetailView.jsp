@@ -13,13 +13,14 @@
 <div class="container">	
 	<form method="post">
 		<div class="card">
-			<div class="card-header"><h3>${boardVO.title}</h3></div>
-			<div class="cord-body" style="height:300px">${boardVO.content}</div>
+			<div class="card-header" ><h3>${boardVO.title}</h3></div>
+			<div class="cord-body"  style="height:300px">${boardVO.content}</div>
 		</div>	
 	</form>
 </div>
 
 	  <input type="button" class="btn btn-info" id="go_list" value="목록" />
+	  <input type="button" class="btn btn-warning" id="go_reply" value="답글"/>
 	  <c:choose>
 	  	  <c:when test="${edit}">
 		 	 <input type="button" class="btn btn-primary" id="go_update" value="수정"/>
@@ -37,6 +38,9 @@
 			})
 			$("#go_delete").on('click', function() {
 				location.href = "${pageContext.request.contextPath}/board/boardDelete.do?idx=${boardVO.idx}&curPage=${curPage}";
+			})
+			$("#go_reply").on('click', function() {
+				location.href = "${pageContext.request.contextPath}/board/boardReplyView.do?idx=${boardVO.idx}&curPage=${curPage}";
 			})
 		});
 		

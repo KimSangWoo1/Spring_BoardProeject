@@ -10,9 +10,9 @@ public interface BoardService {
 	//1. �Խñ� ����Ʈ ����
 	List<Map<String,Object>> selectBoardListService (Map<String,Object> map);
 	//2. �Խñ� �ۼ�
-	void boardInsertService(Map<String,Object>map)throws Exception;
+	void boardInsertService(BoardVO boardVO)throws Exception;
 	//3. �Խñ� �󼼺���
-	BoardVO boardUpateViewService(int idx);
+	BoardVO boardDetailViewService(int idx);
 	//4. �Խñ� ��ȸ�� �ø���
 	void boardAddHitCountService(BoardVO boardVO);
 	//5. �Խù� �� ���� ��������

@@ -19,21 +19,21 @@
    <article>
 		<div class="container" role="main">
 			<h2>게시글 작성 </h2>
-			<form name="form" id="form" method="post" action="${pageContext.request.contextPath}/board/boardInsert.do">
+			<form name="form" id="form" method="post" action="${pageContext.request.contextPath}/board/boardReply.do">
 				<div class="mb-3">
 					<label for="title">제목 </label>
-	  	 			<input type="text" class="form-control" name="title" placeholder="제목을 입력해 주세요" value="${boardVO.title}">
+	  	 			<input type="text" class="form-control" id="title" name="title" value="${boardVO.title}">
 				</div>
 
 				<div class="mb-3">
 					<label for="content">내용</label>
-					<textarea class="form-control" rows="5" name="content" placeholder="내용을 입력해 주세요" ></textarea>
-					<input type="hidden" name="idx" value="${boardVO.idx}"/>
-					<input type="hidden" name="curPage"  value="${curPage}"/>
+					<textarea class="form-control" rows="5" id="content" name="content" placeholder="내용을 입력해 주세요" ></textarea>
+					<input type="hidden" id="idx" name="idx" value="${boardVO.idx}"/>
+					<input type="hidden" id="curPage" name="curPage"  value="${curPage}"/>
 				</div>
 			</form>
 			<div >
-				<button type="button" class="btn btn-sm btn-success" id="board_write"  onclick="boardInsert();">저장</button>
+				<button type="button" class="btn btn-sm btn-success" id="board_reply"  onclick="boardReply();">저장</button>
 				<button type="button" class="btn btn-sm btn-danger" id="board_list" onclick="boardList();">취소</button>
 			</div>
 		</div>
@@ -41,19 +41,35 @@
    
    <script type="text/javascript">
 	   $(document).ready(function(){
+	
 
 	   });
-	     function boardInsert(){
-	  		var boardForm = document.form;
-			var title = boardForm.title.value;
-			var content = boardForm.content.value;
-			//NPE Check
-			if (!title || !content) {
-				alert("제목과 내용을 입력하세요");
-			} else {
-				 $("#form").submit();
-			}
-         }
+
+	   	 function boardReply(){
+
+	   		 $.ajax({
+	    		 url:"/myapp/board/boardReply.do",
+	    		 type:"POST",
+	    		 data:{
+	    			 title : $("#title").val(),
+	    			 content : $("#content").val(),
+	    			 idx : $("#idx").val(),
+	    			 curPage : $("#curPage").val()
+	    		 },
+	    		 success : function(data){
+	    			 alert("답글 작성 완료");
+	    			 if(data.code==0){
+						 window.location.href = "/myapp/board/boardList.do";
+					 }else{
+						//location.reload();
+				 	}
+	    		 }, 
+	    		 error : function(request, status, error){
+	    			 alert("code:" + request.status + "\n" + "message:"
+								+ request.responseText + "\n" + "error:" + error);
+	    		 }
+			 });
+	   	 }
          function boardList(){
           	location.href ="${pageContext.request.contextPath}/board/boardList.do/";
          }

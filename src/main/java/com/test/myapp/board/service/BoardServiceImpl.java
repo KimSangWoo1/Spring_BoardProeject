@@ -26,15 +26,15 @@ public class BoardServiceImpl implements BoardService {
 
 	//2. �Խñ� �ۼ�
 	@Override
-	public void boardInsertService(Map<String, Object> map) throws Exception {
-		 boardDAO.boardInsert(map);
+	public void boardInsertService(BoardVO boardVO) throws Exception {
+		 boardDAO.boardInsert(boardVO);
 	}
 
 	//3. �Խñ� �󼼺���
 	@Override
-	public BoardVO boardUpateViewService(int idx) {
+	public BoardVO boardDetailViewService(int idx) {
 		 //�Խñ� ���� �������� 
-		 BoardVO boardVO = boardDAO.boardUpdateView(idx);
+		 BoardVO boardVO = boardDAO.boardDetailView(idx);
 
 		//DB���� ������ �Խñ� ���� ��Ʈ�ѷ��� ������
 		return boardVO;

@@ -12,10 +12,10 @@ public interface BoardDAO {
 	List<Map<String, Object>> selectBoardList(Map<String, Object> map);
 
 	//2. �Խñ� �ۼ�
-	void boardInsert(Map<String, Object> map);
+	void boardInsert(BoardVO boardVO);
 
 	//3. �Խñ� �󼼺���
-	BoardVO boardUpdateView(int idx);
+	BoardVO boardDetailView(int idx);
 	
 	//4.�Խñ� ��ȸ�� �ø���
 	void boardAddHitCount(BoardVO boardVO);
@@ -31,5 +31,8 @@ public interface BoardDAO {
 	
 	//8. �Խù� ����
 	void boardUpdate(BoardVO boardVO);
+	
+	//9. 마지막 게시글 idx 가져오기
+	int selectLastBoardNo();
 	
 }

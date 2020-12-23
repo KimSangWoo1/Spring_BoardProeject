@@ -25,14 +25,15 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	
 	//2.�Խñ� �ۼ�
-	public void boardInsert(Map<String, Object> map) {
-		sqlSession.insert("board.boardInsert", map);
+	public void boardInsert(BoardVO boardVO) {
+		boardVO.setGroup_no(selectLastBoardNo()+1);
+		sqlSession.insert("board.boardInsert", boardVO);
 	}
 
 	//3.�Խñ� �� ����
-	public BoardVO boardUpdateView(int idx) {
+	public BoardVO boardDetailView(int idx) {
 
-		return sqlSession.selectOne("board.boardUpdateView", idx);
+		return sqlSession.selectOne("board.boardDetailView", idx);
 	}
 	
 	//4.�Խñ� ��ȸ�� �ø���
@@ -65,6 +66,10 @@ public class BoardDAOImpl implements BoardDAO {
 	public void boardUpdate(BoardVO boardVO) {
 		sqlSession.update("board.boardUpdate", boardVO);
 	}
-	
+	//9. 마지막 게시글 idx 가져오기
+	@Override
+	public int selectLastBoardNo() {
+		return sqlSession.selectOne("board.lastBoardNO");
+	}
 
 }

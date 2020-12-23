@@ -8,18 +8,14 @@
 		resultType="hashmap">
 		<![CDATA[
             SELECT
-                idx,
-                title,
-                hit_count,
-                create_time,
-                create_id
+                *
             FROM
                 tbl_board 
             ORDER BY idx DESC
         ]]>
 	</select>
 	<!-- 게시글 작성 useGeneratedKeys="true" keyProperty="IDX" AutoInCrement 사용했기에 적어줘야 함 -->
-	<insert id="boardInsert" parameterType="hashmap"
+	<insert id="boardInsert" parameterType="BoardVO"
 		useGeneratedKeys="true" keyProperty="idx">
 		<![CDATA[
             INSERT INTO tbl_board
@@ -28,7 +24,10 @@
 				content,
 				hit_count,
 				create_time,
-				create_id
+				create_id,
+				group_no,
+				group_order,
+				depth
 			)
 			VALUES
 			(
@@ -36,13 +35,16 @@
 				#{content},
 				0,
 				NOW(),
-				#{create_id}
+				#{create_id},
+				#{group_no},
+				0,
+				0
 			)
         ]]>
 	</insert>
 	
 	<!-- 게시글 상세 내용 -->
-	<select id="boardUpdateView" parameterType="int" resultType="BoardVO">
+	<select id="boardDetailView" parameterType="int" resultType="BoardVO">
 		<![CDATA[ 
 			SELECT * FROM tbl_board WHERE idx=${idx} 
 		]]>
@@ -66,12 +68,7 @@
 	<select id="boardPagingList" parameterType="int" resultType="BoardVO">
 		<![CDATA[
 		SELECT 
-			idx,
-			title,
-			content,
-			hit_count,
-			create_time,
-			create_id
+			*
 		FROM 
 			tbl_board
 		WHERE idx > 0		
@@ -97,7 +94,14 @@
 				idx = ${idx}
 		]]>
 	</update>
+	
+	<select id="lastBoardNO" resultType="int">
+		<![CDATA[
+			SELECT idx FROM tbl_board ORDER BY idx DESC limit 1
+		]]>
+	</select>
 </mapper>
+
 
 <!-- CDATA 태그안에서는 전부 문자열로 치환함 < , > ( ) 같은걸 쓰면 오류 날 경우를 없애줌 -->
 <!-- https://java119.tistory.com/70 -->

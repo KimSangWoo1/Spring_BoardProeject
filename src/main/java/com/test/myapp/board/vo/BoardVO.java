@@ -2,7 +2,7 @@ package com.test.myapp.board.vo;
 
 /**
  * @author ksw
- * °Ô½ÃÆÇ DTO (°Ô½Ã±Û ¹øÈ£, ºÎ ¹øÈ£, Á¦¸ñ, ³»¿ë, Á¶È¸¼ö, »ý¼º ³¯Â¥, »ý¼º ¾ÆÀÌµð)  
+ * ï¿½Ô½ï¿½ï¿½ï¿½ DTO (ï¿½Ô½Ã±ï¿½ ï¿½ï¿½È£, ï¿½ï¿½ ï¿½ï¿½È£, ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½È¸ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â¥, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½)  
  */
 public class BoardVO {
 
@@ -12,6 +12,9 @@ public class BoardVO {
 	private int hit_count;
 	private String create_time;
 	private String create_id;
+	private int group_no;
+	private int group_order;
+	private int depth;
 	
 	public int getIdx() {
 		return idx;
@@ -48,5 +51,23 @@ public class BoardVO {
 	}
 	public void setCreate_id(String create_id) {
 		this.create_id = create_id;
+	}
+	public int getGroup_no() {
+		return group_no;
+	}
+	public void setGroup_no(int group_no) {
+		this.group_no = group_no;
+	}
+	public int getGroup_order() {
+		return group_order;
+	}
+	public void setGroup_order(int group_order) {
+		this.group_order = group_order;
+	}
+	public int getDepth() {
+		return depth;
+	}
+	public void setDepth(int depth) {
+		this.depth = depth;
 	}
 }
