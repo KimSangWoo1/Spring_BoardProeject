@@ -63,7 +63,7 @@ public class BoardController {
 		boardVO.setTitle(title);
 		boardVO.setContent(content);
 		
-		//boardService.boardInsertService(boardVO);
+		boardService.boardInsertService(boardVO);
 		ModelAndView mv = new ModelAndView("redirect:boardList.do/");	
 		return mv;
 	}
@@ -127,6 +127,15 @@ public class BoardController {
 	@RequestMapping(value = "board/boardDelete.do", method = RequestMethod.GET)
 	public ModelAndView boardDelete(@RequestParam int idx, @RequestParam int curPage) throws Exception {
 		ModelAndView mv = new ModelAndView("redirect:boardPagingList.do?curpage=" + curPage);
+		
+		//1. 삭제 전  삭제  값 가져오기
+		BoardVO delteboard = boardService.boardDeleteReadyService(idx);
+		//2. 원글이 아닐 경우 삭제 게시글에 답글, 답 답글 들 order 값 수정
+		if(delteboard.getGroup_order()!=0) {
+			boardService.boardSubGroupOrderService(delteboard);
+		}
+		//원글일 아닐경우 바로 삭제  boardService.boardDeleteService(idx);
+		//게시글 삭제
 		boardService.boardDeleteService(idx);
 		return mv;
 	}
@@ -185,15 +194,72 @@ public class BoardController {
 		int curPage = Integer.parseInt(request.getParameter("curPage"));
 		
 		BoardVO boardVO = new BoardVO();
-		boardVO.setGroup_no(idx);
 		boardVO.setTitle(title);
 		boardVO.setContent(content);
 		boardVO.setCreate_id(create_id);
 		
-
+		//1. 원 글 order, depth 조회 
+		BoardVO originBoard = boardService.boardReplyReadyService(idx);
+		int originOrder = originBoard.getGroup_order();
+		
+		int lastGroupOrder;
+		//2. 답글 일 경우
+		if(originOrder==0) {
+			// group_order 기준으로 가장 높은 order 값을 찾는다
+			lastGroupOrder = boardService.boardLastGroupOrderService(idx);
+			boardVO.setGroup_order(lastGroupOrder+1);
+			boardVO.setGroup_no(idx);
+			boardVO.setDepth(1);
+			boardService.boardReplyService(boardVO);
+			System.out.println("답글을  달았습니다.");
+		}
+		//3. 답 답글일 경우
+		else {
+			//원래 게시글 속성 가져오기
+			int originDepth = originBoard.getDepth();
+			int originNo = originBoard.getGroup_no();	
+			//
+			BoardVO selectBoard = new BoardVO();
+			selectBoard.setDepth(originDepth);
+			selectBoard.setGroup_no(originNo);
+			selectBoard.setGroup_order(originOrder);
+			
+			//3-1 같은 depth 기준으로  다음 (가장 낮은) Order값을 찾는다. 
+			lastGroupOrder = boardService.boardNextGroupOrderService(selectBoard);
+			System.out.println("값은" +lastGroupOrder);
+			
+				
+			//3-1-1 기존에 있던 다른 답글이 없을 경우
+			if(lastGroupOrder==0) {				
+				//3-1-2 답 답글들 조회 후 마지막 order 값을 찾아 +1 해줌
+				int resultGroupOrder = boardService.boardLastGroupOrderService(originNo);		
+				
+				//3-1-3  답 답글 작성
+				boardVO.setDepth(originDepth+1);
+				boardVO.setGroup_no(originNo);
+				boardVO.setGroup_order(resultGroupOrder+1);
+				boardService.boardReplyService(boardVO);
+				System.out.println("답 답글을  달았습니다. 경로:1");
+			}
+			//3-2-1기존에 있던 답 답글이 있었을 경우.
+			else {
+				//3-2-2  기존에 있던 답글들 order 값 +1 시키기
+				BoardVO updateBoard = new BoardVO();
+				updateBoard.setGroup_order(lastGroupOrder);
+				updateBoard.setGroup_no(originNo);
+				boardService.boardAddGroupOrderService(updateBoard);
+				System.out.println("답글들을  먼저 수정 하였습니다. 경로:2" +lastGroupOrder);
+				//3-2-3 답 답글 작성
+				boardVO.setDepth(originDepth+1);
+				boardVO.setGroup_no(originNo);
+				boardVO.setGroup_order(lastGroupOrder);
+				boardService.boardReplyService(boardVO);
+				System.out.println("답 답글을  달았습니다. 경로:2");
+			}
+		}
+		 	
 		int code = 0;
 		String msg ="성공";
-		
 		result.put("code", code);
 		result.put("msg", msg);
 		return result;

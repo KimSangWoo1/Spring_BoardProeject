@@ -11,7 +11,7 @@
                 *
             FROM
                 tbl_board 
-            ORDER BY idx DESC
+            ORDER BY group_no DESC, group_order ASC
         ]]>
 	</select>
 	<!-- 게시글 작성 useGeneratedKeys="true" keyProperty="IDX" AutoInCrement 사용했기에 적어줘야 함 -->
@@ -72,7 +72,7 @@
 		FROM 
 			tbl_board
 		WHERE idx > 0		
-		ORDER BY idx DESC, create_time DESC
+		ORDER BY group_no DESC, group_order ASC
 		 LIMIT #{startIndex}, #{pageSize}
 		]]>
 	</select>
@@ -94,12 +94,94 @@
 				idx = ${idx}
 		]]>
 	</update>
-	
+	<!-- 게시글 마지막 번호 가져오기 -->
 	<select id="lastBoardNO" resultType="int">
 		<![CDATA[
 			SELECT idx FROM tbl_board ORDER BY idx DESC limit 1
 		]]>
 	</select>
+	
+	<!-- 게시글 답글 준비 -->
+	<select id="boardReplyReady" parameterType="int" resultType="BoardVO">
+		SELECT group_no, 
+		group_order, depth FROM tbl_board WHERE idx= ${idx} 
+	</select>
+	
+	<!-- 게시글 마지막 group_order 값 가져오기 -->
+	<select id="boardLastGroupOrder"  parameterType="int" resultType="int">
+		SELECT 
+			group_order 
+		FROM tbl_board 
+		WHERE group_no =${idx} 
+		ORDER BY group_order DESC 
+		LIMIT 1
+	</select>	
+	
+	<!-- 게시글 답글 달기 -->
+	<insert id="boardReply" parameterType="BoardVO">
+		INSERT INTO tbl_board
+			(
+				title,
+				content,
+				hit_count,
+				create_time,
+				create_id,
+				group_no,
+				group_order,
+				depth
+			)
+			VALUES
+			(
+				#{title},
+				#{content},
+				0,
+				NOW(),
+				#{create_id},
+				#{group_no},
+				#{group_order},
+				#{depth}
+			)
+	</insert>
+	<!-- 답 답글일 경우 다음 답글에 order 값을 찾는다. -->
+	<select id="boardNextGroupOrder" parameterType="BoardVO" resultType="int">
+		SELECT
+			IFNULL(group_order,0)group_order
+		FROM
+			tbl_board
+		WHERE
+			group_no=#{group_no} AND depth=#{depth} AND group_order>#{group_order}
+		ORDER BY group_order ASC
+		LIMIT 1
+	</select>
+		<!--작성시 답 글들 order값 수정하기 +1-->
+	<update id="boardAddGroupOrder" parameterType="BoardVO">
+		<![CDATA[
+		UPDATE tbl_board 
+		SET
+			group_order = group_order+1
+		Where 
+			group_no = #{group_no} AND group_order >= #{group_order}
+		]]>
+	</update>
+	
+	<!-- 게시글 삭제 전 준비 -->
+	<select id="boardDeleteReady" parameterType="int" resultType="BoardVO">
+		<![CDATA[
+			SELECT * FROM tbl_board WHERE idx=${idx}
+		]]>
+	</select>
+	
+	<!-- 게시글 삭제 전 답글들 order값 수정하기 -1 -->
+	<update id="boardSubGroupOrder" parameterType="BoardVO">
+		<![CDATA[
+			UPDATE 
+				tbl_board
+			SET
+				group_order = group_order-1
+			WHERE 
+				group_no = #{group_no} AND group_order > #{group_order}
+		]]>
+	</update>
 </mapper>
 
 

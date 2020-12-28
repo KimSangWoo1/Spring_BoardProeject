@@ -12,33 +12,32 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 	
 	private String userid;
-	//Àü
+	//ï¿½ï¿½
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
-		System.out.println("pre handle");
-		//¼¼¼Ç ¹Þ¾Æ¿À±â
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½
 		HttpSession session = request.getSession();
-		//ÀúÀåµÈ ¼¼¼Ç °ª °¡Á®¿À±â
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		this.userid = (String) session.getAttribute("userid");
-		//ÀúÀåµÈ ¼¼¼Ç °ªÀÌ ¾øÀ½ --> ·Î±×ÀÎ ÁøÇà
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ --> ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		if(userid==null ||userid.trim().isEmpty()) {	
-			System.out.println("ºñ ·Î±×ÀÎ");
+			System.out.println("ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½");
 			
-			//·Î±×ÀÎ±âº» ÆäÀÌÁö·Î ÀÌµ¿
+			//ï¿½Î±ï¿½ï¿½Î±âº» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 			response.sendRedirect("/myapp/login.do");
 			return false;
 		}
-		// ·Î±×ÀÎÀÌ µÇ¾îÀÖÀ½
-		System.out.println("¼¼¼Ç ·Î±×ÀÎ");
+		// ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½
+		//System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½");
 		return true;
 	}
-	//ÈÄ
+	//ï¿½ï¿½
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView mv) throws Exception{
 		 super.postHandle(request, response, handler, mv);
-		System.out.println("poset handle");
+		
 	}
-	//³¡
+	//ï¿½ï¿½
 	@Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
             throws Exception {
