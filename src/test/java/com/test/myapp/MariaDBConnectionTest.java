@@ -7,9 +7,11 @@ import org.junit.Test;
 
 public class MariaDBConnectionTest {
 	private static final String DRIVER = "org.mariadb.jdbc.Driver";
-	private static final String URL = "jdbc:mariadb://localhost:3306/spring";
-	private static String USER = "ksw" ;
-	private static String PASSWORD = "1234";
+	//jdbc:mariadb://121.169.194.198:3306/spring ,USER = "planty" , PASSWORD = "Planty2020"
+	//jdbc:mariadb://localhost:3306/spring ,USER = "ksw" , PASSWORD = "1234
+	private static final String URL = "jdbc:mariadb://121.169.194.198:3306/spring";
+	private static String USER = "planty";
+	private static String PASSWORD = "Planty2020";
 
 	@Test
 	public void TestConnection() throws Exception{

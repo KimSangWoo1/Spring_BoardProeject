@@ -1,38 +1,38 @@
 package com.test.myapp.board.util;
 
 public class Pagination {
-	// �� �������� �Խñ� �� 
-    private int pageSize = 5;
-	// �� ��(range)�� ������ �� 
+	// 페이지 안에 게시글 갯수
+    private int pageSize = 10;
+	// 페이지 갯수 범위 설정 값
     private int rangeSize = 5;  
-    // ���� ������ 
+    // 현재 페이지
     private int curPage = 1;   
-    // ���� ��(range) 
+    // 현재 범위(range) 
     private int curRange = 1; 
-    // �� �Խñ� �� 
+    // 게시글 총 갯수
     private int listCnt; 
-    // �� ������ �� 
+    // 페이지 총 갯수
     private int pageCnt;
-    // �� ��(range) �� 
+    // 범위 총 갯수
     private int rangeCnt; 
-    // ���� ������ 
+    // 첫 페이지
     private int startPage = 1;
-    // �� ������ 
+    // 마지막 페이지
     private int endPage = 1;
-    /// ���� index 
+    /// 시작 index 
     private int startIndex = 0;
 
-	/// ���� ������ 
+	/// 전 범위
     private int prevPage;
-    // ���� ������ 
+    // 다음 범위
     private int nextPage;
     
     public Pagination () {}
 	public Pagination (int listCnt,  int curPage){
     
-    	//���� ������
+    	//현재 페이지 설정
     	this.curPage=curPage;
-    	//�� �Խù� ��
+    	//게시글 총 갯수 설정
     	this.listCnt=listCnt;
     	
     	//1. ��ü ������ ��   ex) ��ü �Խñ� ��/ �������� ������ �Խñ� �� = ��ü ������ ��  

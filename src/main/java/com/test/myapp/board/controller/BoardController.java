@@ -30,7 +30,7 @@ public class BoardController {
 	@Resource(name = "boardService")
 	private BoardService boardService;
 
-	// 1.�Խñ� ��� ������ �̵�
+	// 1. 게시글 목록
 	@RequestMapping("board/boardList.do")
 	public ModelAndView boardList(Map<String, Object> map) throws Exception {
 		ModelAndView mv = new ModelAndView("/jsp/board/boardList");
@@ -40,14 +40,14 @@ public class BoardController {
 		return mv;
 	}
 
-	// 2.�Խñ� �ۼ� �������� �̵�
+	// 2. 게시글 작성 뷰
 	@RequestMapping("board/boardWrite.do")
 	public ModelAndView BoardWrite() throws Exception {
 		ModelAndView mv = new ModelAndView("/jsp/board/boardWrite");
 		return mv;
 	}
 
-	// 3.�Խñ� �ۼ� ��ư Ŭ�� -> �Խ��� DB�� ����
+	// 3. 게시글 작성
 	@RequestMapping(value = "board/boardInsert.do", method = RequestMethod.POST)
 	@ResponseBody
 	public ModelAndView boardInsert(HttpServletRequest request) throws Exception {
@@ -68,7 +68,7 @@ public class BoardController {
 		return mv;
 	}
 
-	// 4.�Խñ� �� �������� �̵�
+	// 4. 게시글 상세 뷰
 	@RequestMapping(value = "board/boardDetailView.do", method = RequestMethod.GET)
 	public ModelAndView boardDetailView(HttpServletRequest request, @RequestParam int idx,
 			@RequestParam(defaultValue = "1") int curPage,
@@ -103,7 +103,7 @@ public class BoardController {
 		return mv;
 	}
 
-	// 5.�Խñ� ������¡
+	// 5. 뷰 페이징 리스트 뷰
 	@RequestMapping(value = "board/boardPagingList.do", method = RequestMethod.GET)
 	public ModelAndView boardPagingList(@RequestParam(defaultValue = "1") int curPage) throws Exception {
 		ModelAndView mv = new ModelAndView("/jsp/board/boardViewPaging");
@@ -123,7 +123,7 @@ public class BoardController {
 		return mv;
 	}
 
-	// 6. �Խ��� ����
+	// 6. 게시글 삭제
 	@RequestMapping(value = "board/boardDelete.do", method = RequestMethod.GET)
 	public ModelAndView boardDelete(@RequestParam int idx, @RequestParam int curPage) throws Exception {
 		ModelAndView mv = new ModelAndView("redirect:boardPagingList.do?curpage=" + curPage);
@@ -134,13 +134,14 @@ public class BoardController {
 		if(delteboard.getGroup_order()!=0) {
 			boardService.boardSubGroupOrderService(delteboard);
 		}
-		//원글일 아닐경우 바로 삭제  boardService.boardDeleteService(idx);
+		//원글이 아닐경우 바로 삭제  
 		//게시글 삭제
 		boardService.boardDeleteService(idx);
+		System.out.println("게시글 삭제");
 		return mv;
 	}
 
-	// 7. �Խñ� ����
+	// 7. 게시글 수정 뷰
 	@RequestMapping(value = "board/boardUpdateView.do", method = RequestMethod.GET)
 	public ModelAndView boardUpdateView(@RequestParam int idx, @RequestParam int curPage) throws Exception {
 
@@ -164,7 +165,7 @@ public class BoardController {
 		ModelAndView mv = new ModelAndView("redirect:boardDetailView.do?idx=" + idx + "&curPage=" + curPage);
 		return mv;
 	}
-	// 게시글 답변 뷰
+	// 9. 게시글 답글 뷰
 	@RequestMapping(value="board/boardReplyView.do", method = RequestMethod.GET)
 	public ModelAndView boardReplyView(@RequestParam int idx, @RequestParam int curPage) throws Exception  {
 		
@@ -180,7 +181,7 @@ public class BoardController {
 		System.out.println("답글 "+boardVO.getTitle());
 		return mv;
 	}
-	//게시글 답변 
+	//10. 게시글 답글 
 	@RequestMapping(value="board/boardReply.do", method = RequestMethod.POST)
 	@ResponseBody
 	public HashMap<String,Object> boardReply(HttpServletRequest request) throws Exception {
@@ -224,38 +225,41 @@ public class BoardController {
 			selectBoard.setGroup_no(originNo);
 			selectBoard.setGroup_order(originOrder);
 			
+			System.out.println("깊이 :"+selectBoard.getDepth());
+			System.out.println("그룹 번호 :"+selectBoard.getGroup_no());
+			System.out.println("그룹 순서 :"+selectBoard.getGroup_order());
 			//3-1 같은 depth 기준으로  다음 (가장 낮은) Order값을 찾는다. 
-			lastGroupOrder = boardService.boardNextGroupOrderService(selectBoard);
-			System.out.println("값은" +lastGroupOrder);
 			
+			lastGroupOrder = boardService.boardNextGroupOrderService(selectBoard);					
 				
 			//3-1-1 기존에 있던 다른 답글이 없을 경우
 			if(lastGroupOrder==0) {				
 				//3-1-2 답 답글들 조회 후 마지막 order 값을 찾아 +1 해줌
 				int resultGroupOrder = boardService.boardLastGroupOrderService(originNo);		
-				
+				System.out.println("마지막 순서는 :" +resultGroupOrder+"따라서 순서는 :" +(resultGroupOrder+1)+"로 지정됩니다.");
 				//3-1-3  답 답글 작성
 				boardVO.setDepth(originDepth+1);
 				boardVO.setGroup_no(originNo);
 				boardVO.setGroup_order(resultGroupOrder+1);
 				boardService.boardReplyService(boardVO);
-				System.out.println("답 답글을  달았습니다. 경로:1");
+				System.out.println("답 답글을  달았습니다.");
 			}
 			//3-2-1기존에 있던 답 답글이 있었을 경우.
 			else {
+				System.out.println("다음 순서는 :" +lastGroupOrder+"따라서 순서 조정 후 순서는 :" +(lastGroupOrder)+"로 지정됩니다.");
 				//3-2-2  기존에 있던 답글들 order 값 +1 시키기
 				BoardVO updateBoard = new BoardVO();
 				updateBoard.setGroup_order(lastGroupOrder);
 				updateBoard.setGroup_no(originNo);
 				boardService.boardAddGroupOrderService(updateBoard);
-				System.out.println("답글들을  먼저 수정 하였습니다. 경로:2" +lastGroupOrder);
+				System.out.println("답글들을 먼저 수정 하였습니다.");
 				//3-2-3 답 답글 작성
 				boardVO.setDepth(originDepth+1);
 				boardVO.setGroup_no(originNo);
 				boardVO.setGroup_order(lastGroupOrder);
 				boardService.boardReplyService(boardVO);
-				System.out.println("답 답글을  달았습니다. 경로:2");
-			}
+				System.out.println("답 답글을  달았습니다.");
+			}			
 		}
 		 	
 		int code = 0;

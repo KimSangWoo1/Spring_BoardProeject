@@ -18,19 +18,19 @@ public class BoardServiceImpl implements BoardService {
 	@Resource(name="boardDAO")
 	private BoardDAO boardDAO;
 	
-	//1.�Խñ� ����Ʈ ����
+	//1.게시글 리스트
 	@Override
 	public List<Map<String, Object>> selectBoardListService(Map<String, Object> map) {
 		return boardDAO.selectBoardList(map);
 	}
 
-	//2. �Խñ� �ۼ�
+	//2. 게시글 작성
 	@Override
 	public void boardInsertService(BoardVO boardVO) throws Exception {
 		 boardDAO.boardInsert(boardVO);
 	}
 
-	//3. �Խñ� �󼼺���
+	//3. 게시글 상세 내용
 	@Override
 	public BoardVO boardDetailViewService(int idx) {
 		 //�Խñ� ���� �������� 
@@ -40,7 +40,7 @@ public class BoardServiceImpl implements BoardService {
 		return boardVO;
 	}
 	
-	//4. ��ȸ�� �ø���
+	//4. 게시글 조회수 증가
 	@Override
 	public void boardAddHitCountService(BoardVO boardVO) {
 	
@@ -51,24 +51,24 @@ public class BoardServiceImpl implements BoardService {
 		boardDAO.boardAddHitCount(boardVO);
 	}
 	
-	//5. �Խñ� �� ���� ��������
+	//5. 게시글 총 갯수 (뷰 페이징)
 	@Override
 	public int boardListCnt() {
 		return boardDAO.boardAllListCnt();
 	}
 
-	//6. �Խñ� ����¡���� ��������
+	//6. 게시글 뷰 페이징 리스트
 	@Override
 	public List<BoardVO> boardPagingService(Pagination pagination) {
 
 		return boardDAO.boardPaging(pagination);
 	}
-	//7. �Խ��� ����
+	//7. 게시글 삭제
 	@Override
 	public void boardDeleteService(int idx) {
 		boardDAO.boardDelete(idx);
 	}	
-	//8.�Խñ� ����
+	//8. 게시글 수정
 	@Override
 	public void boardUpdateService(BoardVO boardVO) {
 		boardDAO.boardUpdate(boardVO);

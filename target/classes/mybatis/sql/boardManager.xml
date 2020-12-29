@@ -42,8 +42,19 @@
 			)
         ]]>
 	</insert>
+	<!-- 게시글 작성시 group_no 값 넣어주기 -->
+	<update id="boardUpdateGroupNO" parameterType="BoardVO">
+		<![CDATA[
+			UPDATE 
+				tbl_board
+			SET
+				group_no = #{group_no}
+			WHERE 
+				idx = #{idx}
+		]]>
+	</update>
 	
-	<!-- 게시글 상세 내용 -->
+		<!-- 게시글 상세 내용 -->
 	<select id="boardDetailView" parameterType="int" resultType="BoardVO">
 		<![CDATA[ 
 			SELECT * FROM tbl_board WHERE idx=${idx} 
@@ -144,14 +155,17 @@
 	</insert>
 	<!-- 답 답글일 경우 다음 답글에 order 값을 찾는다. -->
 	<select id="boardNextGroupOrder" parameterType="BoardVO" resultType="int">
-		SELECT
-			IFNULL(group_order,0)group_order
-		FROM
-			tbl_board
-		WHERE
-			group_no=#{group_no} AND depth=#{depth} AND group_order>#{group_order}
-		ORDER BY group_order ASC
-		LIMIT 1
+		<![CDATA[
+			SELECT
+			IFNULL(MIN(group_order),0)group_order
+			FROM
+				tbl_board
+			WHERE
+				group_no=#{group_no} AND depth<=#{depth} AND group_order>#{group_order}
+			ORDER BY group_order ASC
+		
+		]]>
+		
 	</select>
 		<!--작성시 답 글들 order값 수정하기 +1-->
 	<update id="boardAddGroupOrder" parameterType="BoardVO">
